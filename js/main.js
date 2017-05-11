@@ -7,7 +7,8 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
     usrprofile.open("GET", "https://api.github.com/users/" + user, false);
     usrprofile.send();
     if (usrprofile.status !== 404) {
-        let profiledat = JSON.parse(usrprofile.response);
+
+ /*       let profiledat = JSON.parse(usrprofile.response);
         //remove the search bar
         document.getElementById("usersearch").remove();
 
@@ -73,9 +74,10 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         document.getElementById('profile').appendChild(star);
         document.getElementById('profile').appendChild(follow);
         //document.getElementById('profile').appendChild(dp);
-
+*/
+        /*--------------------------------------------------------------------*/
         //calling to get the public repo of users
-        let usrrepo = new XMLHttpRequest();
+/*      let usrrepo = new XMLHttpRequest();
         usrrepo.open("GET", "https://api.github.com/users/" + user + "/repos", false);
         usrrepo.send();
         var repomaster = JSON.parse(usrrepo.response);
@@ -101,7 +103,13 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         });
         console.log(langcount);
         console.log("Forks: " + totalForks + " " + "Stars: " + totalStars + " " + "Watchers: " + totalWatchers);
-
+*/
+        /*--------------------------------------------------------------------*/
+        //calling to get the activity of user
+        let usrevent = new XMLHttpRequest();
+        usrevent.open("GET","https://api.github.com/users/"+user+"/events",false);
+        usrevent.send();
+        console.log((JSON.parse(usrevent.response)));
 
     } else {
         alert("User not found,enter valid username");
