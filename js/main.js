@@ -8,8 +8,6 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
     usrprofile.send();
     if (usrprofile.status !== 404) {
         let profiledat = JSON.parse(usrprofile.response);
-        console.log(profiledat);
-
         //remove the search bar
         document.getElementById("usersearch").remove();
 
@@ -48,7 +46,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         //create the element for displaying starred repos
         let star = document.createElement('h3');
         star.innerHTML = "Starred Repos: " + starred;
-        
+
         //create the element for displaying followers and following
         let follow = document.createElement('h3');
         let followers = profiledat.followers;
@@ -75,6 +73,36 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         document.getElementById('profile').appendChild(star);
         document.getElementById('profile').appendChild(follow);
         //document.getElementById('profile').appendChild(dp);
+
+        //calling to get the public repo of users
+        let usrrepo = new XMLHttpRequest();
+        usrrepo.open("GET", "https://api.github.com/users/" + user + "/repos", false);
+        usrrepo.send();
+        var repomaster = JSON.parse(usrrepo.response);
+        let i;
+        //count the forks,stars and watchers
+        var totalForks, totalStars, totalWatchers;
+        totalForks = 0;
+        totalStars = 0;
+        totalWatchers = 0;
+        var lang = new Array(repomaster.length);
+        // getting the languages from the repositories
+        for (i = 0; i < repomaster.length; i++) {
+            lang[i] = repomaster[i].language;
+            //incrementing individual score
+            totalForks += repomaster[i].forks_count;
+            totalStars += repomaster[i].stargazers_count;
+            totalWatchers += repomaster[i].watchers_count;
+        }
+        lang = lang.filter(a => a !== null); //removing null entries 
+        var langcount = {};
+        lang.forEach(function (k) {
+            langcount[k] = (langcount[k] || 0) + 1;
+        });
+        console.log(langcount);
+        console.log("Forks: " + totalForks + " " + "Stars: " + totalStars + " " + "Watchers: " + totalWatchers);
+
+
     } else {
         alert("User not found,enter valid username");
         document.usersearch.username.value = "";
