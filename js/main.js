@@ -8,7 +8,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
     usrprofile.send();
     if (usrprofile.status !== 404) {
 
- /*       let profiledat = JSON.parse(usrprofile.response);
+        /*       let profiledat = JSON.parse(usrprofile.response);
         //remove the search bar
         document.getElementById("usersearch").remove();
 
@@ -77,7 +77,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
 */
         /*--------------------------------------------------------------------*/
         //calling to get the public repo of users
-/*      let usrrepo = new XMLHttpRequest();
+        let usrrepo = new XMLHttpRequest();
         usrrepo.open("GET", "https://api.github.com/users/" + user + "/repos", false);
         usrrepo.send();
         var repomaster = JSON.parse(usrrepo.response);
@@ -101,15 +101,56 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         lang.forEach(function (k) {
             langcount[k] = (langcount[k] || 0) + 1;
         });
-        console.log(langcount);
+        var sortedlang = ((Object.entries(langcount)).sort((a, b) => b[1] - a[1])).slice(0,5);
+        var langlist = [];
+        var listcount = [];
+        for(i=0;i<sortedlang.length;i++){
+            langlist[i]=sortedlang[i][0];
+            listcount[i]=sortedlang[i][1];
+        }
         console.log("Forks: " + totalForks + " " + "Stars: " + totalStars + " " + "Watchers: " + totalWatchers);
-*/
+
         /*--------------------------------------------------------------------*/
         //calling to get the activity of user
-        let usrevent = new XMLHttpRequest();
-        usrevent.open("GET","https://api.github.com/users/"+user+"/events",false);
-        usrevent.send();
-        console.log((JSON.parse(usrevent.response)));
+        /*        let usrevent = new XMLHttpRequest();
+                usrevent.open("GET","https://api.github.com/users/"+user+"/events",false);
+                usrevent.send();
+                console.log((JSON.parse(usrevent.response)));*/
+        
+        //creating top 5 languages chart
+        var ctx = document.getElementById('langac');
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: listcount,
+                    backgroundColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)'
+        ],
+                    label: 'Top 5 languages'
+            }],
+                labels: langlist
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Top 5 Languages'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        };
+        var mychart = new Chart(ctx, config);
 
     } else {
         alert("User not found,enter valid username");
