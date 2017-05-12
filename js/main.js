@@ -172,15 +172,16 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 }
             }
         };
-        var ctx2 = document.getElementById("repo");
-        var myChart = new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: repolist,
-                datasets: [{
-                    label: 'Number of stars',
-                    data: starcount,
-                    backgroundColor: [
+        if (starcount.length > 1) {
+            var ctx2 = document.getElementById("repo");
+            var myChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: repolist,
+                    datasets: [{
+                        label: 'Number of stars',
+                        data: starcount,
+                        backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
@@ -188,7 +189,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 159, 64, 0.2)'
             ],
-                    borderColor: [
+                        borderColor: [
                 'rgba(255,99,132,1)',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
@@ -196,27 +197,32 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 'rgba(153, 102, 255, 1)',
                 'rgba(255, 159, 64, 1)'
             ],
-                    borderWidth: 1
+                        borderWidth: 1
         }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
             }]
-                },
-                responsive: true,
-                legend: {
-                    position: 'bottom',
-                },
-                title: {
-                    display: true,
-                    text: 'Top Repositories'
-                },
-            }
-        });
+                    },
+                    responsive: true,
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Top Repositories'
+                    },
+                }
+            });
+        }else{
+            var errmsg = document.createElement('p');
+            errmsg.innerHTML = 'No Popular Repositories';
+            document.body.appendChild(errmsg);
+        }
         var mychart = new Chart(ctx, config);
 
     } else {
