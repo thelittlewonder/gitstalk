@@ -87,7 +87,8 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         totalForks = 0;
         totalStars = 0;
         totalWatchers = 0;
-        var lang = new Array(repomaster.length);
+        var lang = new Array(repomaster.length); //to store popular langauges
+        var popular = []; //to store repo and stars
         // getting the languages from the repositories
         for (i = 0; i < repomaster.length; i++) {
             lang[i] = repomaster[i].language;
@@ -95,19 +96,40 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
             totalForks += repomaster[i].forks_count;
             totalStars += repomaster[i].stargazers_count;
             totalWatchers += repomaster[i].watchers_count;
+            //pushing repo name and stars
+            if (repomaster[i].fork === false) {
+                popular.push({
+                    'name': repomaster[i].name,
+                    'stars': repomaster[i].stargazers_count
+                });
+            }
         }
+        popular = popular.sort(function (a, b) {
+            return b.stars - a.stars;
+        }) // sorting by most stars
+        popular = popular.filter(function (obj) {
+            return obj.stars !== 0;
+        }); // removing repositories with zero stars
         lang = lang.filter(a => a !== null); //removing null entries 
         var langcount = {};
         lang.forEach(function (k) {
             langcount[k] = (langcount[k] || 0) + 1;
-        });
-        var sortedlang = ((Object.entries(langcount)).sort((a, b) => b[1] - a[1])).slice(0,5);
+        }); // counting the number for each langugae
+        var sortedlang = ((Object.entries(langcount)).sort((a, b) => b[1] - a[1])).slice(0, 5);
         var langlist = [];
         var listcount = [];
-        for(i=0;i<sortedlang.length;i++){
-            langlist[i]=sortedlang[i][0];
-            listcount[i]=sortedlang[i][1];
+        for (i = 0; i < sortedlang.length; i++) {
+            langlist[i] = sortedlang[i][0];
+            listcount[i] = sortedlang[i][1];
         }
+        var repolist = [];
+        var starcount = [];
+        for (i = 0; i < popular.length; i++) {
+            repolist[i] = popular[i].name;
+            starcount[i] = popular[i].stars;
+        }
+        repolist = repolist.slice(0, 5); //getting top 5 repo
+        starcount = starcount.slice(0, 5); //getting top 5 repo
         console.log("Forks: " + totalForks + " " + "Stars: " + totalStars + " " + "Watchers: " + totalWatchers);
 
         /*--------------------------------------------------------------------*/
@@ -116,7 +138,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 usrevent.open("GET","https://api.github.com/users/"+user+"/events",false);
                 usrevent.send();
                 console.log((JSON.parse(usrevent.response)));*/
-        
+
         //creating top 5 languages chart
         var ctx = document.getElementById('langac');
         var config = {
@@ -131,18 +153,18 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
             'rgba(75, 192, 192, 1)',
             'rgba(153, 102, 255, 1)'
         ],
-                    label: 'Top 5 languages'
+                    label: 'Top languages'
             }],
                 labels: langlist
             },
             options: {
                 responsive: true,
                 legend: {
-                    position: 'top',
+                    position: 'left',
                 },
                 title: {
                     display: true,
-                    text: 'Top 5 Languages'
+                    text: 'Top Languages'
                 },
                 animation: {
                     animateScale: true,
@@ -150,6 +172,51 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 }
             }
         };
+        var ctx2 = document.getElementById("repo");
+        var myChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: repolist,
+                datasets: [{
+                    label: 'Number of stars',
+                    data: starcount,
+                    backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+                    borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+                    borderWidth: 1
+        }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+            }]
+                },
+                responsive: true,
+                legend: {
+                    position: 'bottom',
+                },
+                title: {
+                    display: true,
+                    text: 'Top Repositories'
+                },
+            }
+        });
         var mychart = new Chart(ctx, config);
 
     } else {
