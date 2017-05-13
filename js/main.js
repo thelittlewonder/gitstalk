@@ -1,3 +1,29 @@
+var beautifyDate = function (a) {
+    a = a.substr(0, 10);
+    let b = a.split('-');
+    let c = b.reverse();
+    return c.join('-');
+};
+
+var timeSince = function (timeStamp) {
+    var now = new Date(),
+        secondsPast = (now.getTime() - timeStamp.getTime()) / 1000;
+    if (secondsPast < 60) {
+        return parseInt(secondsPast) + ' seconds ago';
+    }
+    if (secondsPast < 3600) {
+        return parseInt(secondsPast / 60) + ' minutes ago';
+    }
+    if (secondsPast <= 86400) {
+        return parseInt(secondsPast / 3600) + ' hours ago';
+    }
+    if (secondsPast > 86400) {
+        day = timeStamp.getDate();
+        month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ", "");
+        year = timeStamp.getFullYear() == now.getFullYear() ? "" : " " + timeStamp.getFullYear();
+        return day + " " + month + year;
+    }
+}
 document.getElementById('usersearch').addEventListener('submit', function (e) {
     e.preventDefault();
     console.log("Form Submitted");
@@ -222,86 +248,100 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         */
 
         //calling to get the activity of user
-/*        let usrevent = new XMLHttpRequest();
+        let usrevent = new XMLHttpRequest();
         usrevent.open("GET", "https://api.github.com/users/" + user + "/events", false);
         usrevent.send();
         var eventmaster = (JSON.parse(usrevent.response));
-        var pushevent = [];
-        var createevent = [];
-        var forkevent = [];
-        var pullrequestevent = [];
-        var watchevent = [];
-        var issuecommentevent = [];
-        var deleteevent = [];
-        var pullrequestreviewcommentevent = [];
-        //handling events and pushing to arrays
+
+        //handling events and pushing to event array
+        var events = [];
         for (i = 0; i < eventmaster.length; i++) {
+            var t = new Date(eventmaster[i].created_at);
+            var n = timeSince(t);
             if (eventmaster[i].type === 'PushEvent') {
-                pushevent.push({
+                events.push({
                     'reponame': eventmaster[i].repo.name,
                     'commitnumbers': eventmaster[i].payload.size,
-                    'timespan': eventmaster[i].created_at
+                    'timespan': t,
+                    'url': eventmaster[i].repo.url,
+                    'type': 'push',
+                    'now': n
                 });
             } else if (eventmaster[i].type === 'CreateEvent') {
-                createevent.push({
+                events.push({
                     'reponame': eventmaster[i].repo.name,
                     'description': eventmaster[i].repo.url,
-                    'timespan': eventmaster[i].created_at
+                    'timespan': t,
+                    'type': 'create',
+                    'now': n
                 });
             } else if (eventmaster[i].type === 'ForkEvent') {
-                forkevent.push({
+                events.push({
                     'reponame': eventmaster[i].repo.name,
                     'repourl': eventmaster[i].repo.url,
-                    'timespan': eventmaster[i].created_at,
-                    'forkurl': eventmaster[i].payload.forkee.url
+                    'timespan': t,
+                    'forkurl': eventmaster[i].payload.forkee.url,
+                    'type': 'fork',
+                    'now': n,
+                    'now': n
                 });
             } else if (eventmaster[i].type === 'PullRequestEvent') {
-                pullrequestevent.push({
+                events.push({
                     'reponame': eventmaster[i].repo.name,
                     'repourl': eventmaster[i].repo.url,
-                    'timespan': eventmaster[i].created_at,
+                    'timespan': t,
                     'action': eventmaster[i].payload.action,
                     'url': eventmaster[i].payload.pull_request.issue_url,
                     'additions': eventmaster[i].payload.pull_request.additions,
-                    'deletions': eventmaster[i].payload.pull_request.deletions
+                    'deletions': eventmaster[i].payload.pull_request.deletions,
+                    'type': 'pr',
+                    'now': n
                 });
             } else if (eventmaster[i].type === 'WatchEvent') {
-                watchevent.push({
+                events.push({
                     'reponame': eventmaster[i].repo.name,
                     'repourl': eventmaster[i].repo.url,
-                    'timespan': eventmaster[i].created_at
+                    'timespan': t,
+                    'type': 'watch',
+                    'now': n
                 });
             } else if (eventmaster[i].type === 'DeleteEvent') {
-                deleteevent.push({
+                events.push({
                     'reponame': eventmaster[i].repo.name,
                     'repourl': eventmaster[i].repo.url,
-                    'timespan': eventmaster[i].created_at,
+                    'timespan': t,
                     'ref': eventmaster[i].payload.ref,
-                    'reftype': eventmaster[i].payload.ref_type
+                    'reftype': eventmaster[i].payload.ref_type,
+                    'type': 'delete',
+                    'now': n
                 });
             } else if (eventmaster[i].type === 'PullRequestReviewCommentEvent') {
-                pullrequestreviewcommentevent.push({
+                events.push({
                     'reponame': eventmaster[i].repo.name,
                     'repourl': eventmaster[i].repo.url,
-                    'timespan': eventmaster[i].created_at,
+                    'timespan': t,
                     'issue': eventmaster[i].payload.pull_request.body,
                     'comment': eventmaster[i].payload.comment.body,
-                    'issueurl': eventmaster[i].payload.pull_request.html_url
+                    'issueurl': eventmaster[i].payload.pull_request.html_url,
+                    'type': 'prcomment',
+                    'now': n
                 });
             } else if (eventmaster[i].type === 'IssueCommentEvent') {
-                issuecommentevent.push({
+                events.push({
                     'reponame': eventmaster[i].repo.name,
                     'repourl': eventmaster[i].repo.url,
-                    'timespan': eventmaster[i].created_at,
+                    'timespan': t,
                     'issue': eventmaster[i].payload.issue.body,
                     'comment': eventmaster[i].payload.comment.body,
-                    'issueurl': eventmaster[i].payload.issue.html_url
+                    'issueurl': eventmaster[i].payload.issue.html_url,
+                    'type': 'issuecomment',
+                    'now': n
                 });
             } else {
                 //aur handle nhi karunga bas.
             }
         }
-*/
+        console.log(events);
     } else {
         alert("User not found,enter valid username");
         document.usersearch.username.value = "";
