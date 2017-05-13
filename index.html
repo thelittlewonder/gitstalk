@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Git Stalk</title>
+    <script src="https://use.fontawesome.com/bb9926dab9.js"></script>
 </head>
 
 <body>
@@ -14,6 +15,61 @@
         <input type="text" name="username" id="searchbox" placeholder="Enter the github username">
         <button type="submit" id="searchbtn">Search</button>
     </form>
+    <div id="canvas">
+        <div id="row1" class="card">
+            <div id="dp">
+                <img src="test.jpg" id="image">
+            </div>
+            <div id="info">
+                <p id="name">
+                    Abhishek Sharma
+                </p>
+                <p id="bio">
+                    <em>A1 Since Day 1</em>
+                </p>
+                <p id="location">
+                    <i class="fa fa-map-marker"></i><span id="place">Faridabad, India</span>
+                </p>
+                <p id="date">
+                    <i class="fa fa-calendar"></i> <span id="din">Joined April, 2015</span>
+                </p>
+                <p id="blog">
+                    <i class="fa fa-globe"></i>
+                    <a href="http://abhisheksharma.design" id="bloglink">http://abhisheksharma.design
+                    </a>
+                </p>
+            </div>
+            <div id="statsgraph">
+                <canvas id="statsc"></canvas>
+            </div>
+        </div>
+        <div id="row2" class="card">
+            <div id="pop" class="label">
+                Popular Repositories
+            </div>
+            <div id="repograph">
+                <canvas id="repoc" height="250"></canvas>
+            </div>
+        </div>
+        <div id="row3">
+            <div id="col1" class="card">
+                <div id="lang" class="label">
+                    Top Languages
+                </div>
+                <div id="langgraph">
+                    <canvas id="langc"></canvas>
+                </div>
+            </div>
+            <div id="col2" class="card">
+                <div id="event" class="label">
+                    Recent Activities
+                </div>
+                <p class="activity">
+                </p>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

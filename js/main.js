@@ -45,60 +45,39 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         let starred = Object.keys(JSON.parse(stars.response)).length;
 
         //create the element for displaying name
-        let name = document.createElement('h1');
+        let name = document.getElementById('name');
         name.innerHTML = profiledat.name;
 
         //create the element for displaying bio
         if (profiledat.bio !== null) {
-            var bio = document.createElement('h3');
+            var bio = document.getElementById('bio');
             bio.innerHTML = profiledat.bio;
         }
 
         //create the element for displaying location
         if (profiledat.location !== null) {
-            var loc = document.createElement('h4');
+            var loc = document.getElementById('place');
             loc.innerHTML = profiledat.location;
         }
 
         //create the element for displaying blog link
         if (profiledat.blog !== "") {
-            var blog = document.createElement('h3');
+            var blog = document.getElementById('bloglink');
             blog.innerHTML = profiledat.blog;
+            blog.href = profiledat.blog;
         }
 
         //create the element for displaying dp
-        let dp = document.getElementById('display');
+        let dp = document.getElementById('image');
         dp.src = profiledat.avatar_url;
 
-        //create the element for displaying starred repos
-        let star = document.createElement('h3');
-        star.innerHTML = "Starred Repos: " + starred;
-
         //create the element for displaying followers and following
-        let follow = document.createElement('h3');
-        let followers = profiledat.followers;
-        let following = profiledat.following;
-        follow.innerHTML = "Followers: " + followers + '<br>' + "Following: " + following;
+        var followers = profiledat.followers;
+        var following = profiledat.following;
 
         //create the element for displaying joining date
-        let joindate = document.createElement('h4');
+        let joindate = document.getElementById('din');
         joindate.innerHTML = "Github Member since " + (profiledat.created_at).substr(0, 10);
-
-
-        //add the elements to the dom
-        document.getElementById('about').appendChild(name);
-        if (profiledat.location !== null) {
-            document.getElementById('about').appendChild(loc);
-        }
-        if (profiledat.bio !== null) {
-            document.getElementById('about').appendChild(bio);
-        }
-        if (profiledat.blog !== "") {
-            document.getElementById('about').appendChild(blog);
-        }
-        document.getElementById('about').appendChild(joindate);
-        document.getElementById('info').appendChild(star);
-        document.getElementById('info').appendChild(follow);
 
         /*--------------------------------------------------------------------*/
         //calling to get the public repo of users
@@ -155,13 +134,60 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         }
         repolist = repolist.slice(0, 5); //getting top 5 repo
         starcount = starcount.slice(0, 5); //getting top 5 repo
-        let tt = document.getElementById('stats');
-        tt.innerHTML = "Forks: " + totalForks + " " + "Stars: " + totalStars + " " + "Watchers: " + totalWatchers;
 
         /*--------------------------------------------------------------------*/
 
         //analysis charts
-        var ctx = document.getElementById('langac');
+
+        var ctx0 = document.getElementById('statsc');
+        var statsdata = {
+            datasets: [{
+                data: [
+            followers,
+            following,
+            totalForks,
+            totalStars,
+            totalWatchers
+        ],
+                backgroundColor: [
+            "#FF6384",
+            "#4BC0C0",
+            "#FFCE56",
+            "#E7E9ED",
+            "#36A2EB"
+        ],
+                label: 'My dataset' // for legend
+    }],
+            labels: [
+        "Followers",
+        "Following",
+        "Total Forks",
+        "Total Stars",
+        "Total Watchers"
+    ]
+        };
+        var merachart = new Chart(ctx0, {
+            data: statsdata,
+            type: 'doughnut',
+            options: {
+                responsive: true,
+                elements: {
+                    arc: {
+                        borderColor: "#fff"
+                    }
+                },
+                legend: {
+                    position: 'bottom',
+                },
+                animation: {
+                    animateRotate: false,
+                    animateScale: true
+                },
+                maintainAspectRatio: false
+            }
+        });
+        /*----------------*/
+        var ctx = document.getElementById('langc');
         var config = {
             type: 'pie',
             data: {
@@ -184,17 +210,19 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                     position: 'left',
                 },
                 title: {
-                    display: true,
-                    text: 'Top Languages'
+                    display: true
                 },
                 animation: {
                     animateScale: true,
                     animateRotate: true
-                }
+                },
+                maintainAspectRatio: false
             }
         };
+        var mychart = new Chart(ctx, config);
+
         if (starcount.length > 1) {
-            var ctx2 = document.getElementById("repo");
+            var ctx2 = document.getElementById("repoc");
             var myChart = new Chart(ctx2, {
                 type: 'bar',
                 data: {
@@ -234,18 +262,14 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                         position: 'bottom',
                     },
                     title: {
-                        display: true,
-                        text: 'Top Repositories'
+                        display: true
                     },
+                    maintainAspectRatio: false
                 }
             });
         } else {
-            //var errmsg = document.createElement('p');
-            //errmsg.innerHTML = 'No Popular Repositories';
-            //document.body.appendChild(errmsg);
+            console.log('Gareeb hai tu');
         }
-        var mychart = new Chart(ctx, config);
-
 
         //calling to get the activity of user
         let usrevent = new XMLHttpRequest();

@@ -1,9 +1,24 @@
+@font-face {
+    font-family: "Proxima Nova";
+    src: url("../fonts/ProximaNova-Regular.woff") format('woff');
+}
+
+@font-face {
+    font-family: "Proxima Nova";
+    src: url("../fonts/ProximaNova-Bold.woff") format('woff');
+    font-weight: bold;
+}
+
 html {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-family: 'Proxima Nova';
 }
 
 body {
-    background-color: #f0f0f0;
+    background-color: #f5f5f5;
+}
+
+p {
+    margin: 0;
 }
 
 #usersearch {
@@ -20,9 +35,22 @@ body {
     padding: 1%;
 }
 
+input:focus {
+    outline: none;
+}
+
+input {
+    outline: none;
+    border: none;
+}
+
+button:focus {
+    outline: none;
+}
+
 h1,
 h3 {
-    font-weight: normal;
+    font-weight: 100;
 }
 
 h1 {
@@ -40,39 +68,119 @@ h3 {
     cursor: pointer;
 }
 
+
+/*Results Page*/
+
 #canvas {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
+    overflow: visible;
 }
 
-#left {
-    width: 35%;
-}
-
-#profile {
+.card {
     background-color: white;
+    border: 1px solid #e2e2e2;
     margin: 1%;
+    padding: 0.5%;
+    box-shadow: 0px 4px 32px 0px rgba(221, 221, 221, 1);
+    -webkit-box-shadow: 0px 4px 32px 0px rgba(221, 221, 221, 1);
+    -moz-box-shadow: 0px 4px 32px 0px rgba(221, 221, 221, 1);
+}
+
+#row1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#image {
+    border-radius: 50%;
+    border: 1px solid transparent;
+    height: 200px;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+#name {
+    font-size: 2.5em;
+}
+
+#bio {
+    font-size: 1em;
+    color: #cfcfcf;
+    font-weight: lighter;
+    margin-bottom: 10px;
+}
+
+#location {
+    font-size: 1.2em;
+    color: #545454;
+    margin-top: 5px;
+}
+
+#location>span {
+    margin-left: 14px;
+}
+
+#date {
+    font-size: 1.2em;
+    color: #545454;
+    margin-top: 5px;
+}
+
+#date>span {
+    margin-left: 5px;
+}
+
+#blog {
+    font-size: 1.2em;
+    margin-top: 5px;
+    color: #545454;
+}
+
+#blog>a {
+    color: #36a2eb;
+    margin-left: 5px;
+}
+
+#row2 {
     display: flex;
     flex-direction: column;
 }
 
-#right {
-    width: 65%;
+.label {
+    color: white;
+    padding: 0.5%;
+    text-align: center;
 }
 
-#repos {
-    background-color: white;
-    margin: 1%;
+#pop {
+    background-color: #ff6384;
+    width: 150px;
 }
 
-#events {
-    background-color: white;
-    margin: 1%;
+#lang {
+    background-color: #36a2eb;
+    width: 120px;
+}
+
+#event {
+    background-color: #4bc0c0;
+    width: 135px;
+}
+
+#row3 {
+    display: flex;
+    flex-direction: row;
 }
 
 #col1 {
+    width: 35%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+#col2 {
+    width: 65%;
 }
