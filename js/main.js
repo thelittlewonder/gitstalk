@@ -34,7 +34,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
     usrprofile.send();
     if (usrprofile.status !== 404) {
 
-        /*       let profiledat = JSON.parse(usrprofile.response);
+        let profiledat = JSON.parse(usrprofile.response);
         //remove the search bar
         document.getElementById("usersearch").remove();
 
@@ -67,7 +67,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         }
 
         //create the element for displaying dp
-        let dp = document.createElement('img');
+        let dp = document.getElementById('display');
         dp.src = profiledat.avatar_url;
 
         //create the element for displaying starred repos
@@ -86,123 +86,123 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
 
 
         //add the elements to the dom
-        document.getElementById('profile').appendChild(name);
+        document.getElementById('about').appendChild(name);
         if (profiledat.location !== null) {
-            document.getElementById('profile').appendChild(loc);
+            document.getElementById('about').appendChild(loc);
         }
         if (profiledat.bio !== null) {
-            document.getElementById('profile').appendChild(bio);
+            document.getElementById('about').appendChild(bio);
         }
         if (profiledat.blog !== "") {
-            document.getElementById('profile').appendChild(blog);
+            document.getElementById('about').appendChild(blog);
         }
-        document.getElementById('profile').appendChild(joindate);
-        document.getElementById('profile').appendChild(star);
-        document.getElementById('profile').appendChild(follow);
-        //document.getElementById('profile').appendChild(dp);
-*/
+        document.getElementById('about').appendChild(joindate);
+        document.getElementById('info').appendChild(star);
+        document.getElementById('info').appendChild(follow);
+
         /*--------------------------------------------------------------------*/
         //calling to get the public repo of users
-        /*        let usrrepo = new XMLHttpRequest();
-                usrrepo.open("GET", "https://api.github.com/users/" + user + "/repos", false);
-                usrrepo.send();
-                var repomaster = JSON.parse(usrrepo.response);
-                let i;
-                //count the forks,stars and watchers
-                var totalForks, totalStars, totalWatchers;
-                totalForks = 0;
-                totalStars = 0;
-                totalWatchers = 0;
-                var lang = new Array(repomaster.length); //to store popular langauges
-                var popular = []; //to store repo and stars
-                // getting the languages from the repositories
-                for (i = 0; i < repomaster.length; i++) {
-                    lang[i] = repomaster[i].language;
-                    //incrementing individual score
-                    totalForks += repomaster[i].forks_count;
-                    totalStars += repomaster[i].stargazers_count;
-                    totalWatchers += repomaster[i].watchers_count;
-                    //pushing repo name and stars
-                    if (repomaster[i].fork === false) {
-                        popular.push({
-                            'name': repomaster[i].name,
-                            'stars': repomaster[i].stargazers_count
-                        });
-                    }
-                }
-                popular = popular.sort(function (a, b) {
-                    return b.stars - a.stars;
-                }) // sorting by most stars
-                popular = popular.filter(function (obj) {
-                    return obj.stars !== 0;
-                }); // removing repositories with zero stars
-                lang = lang.filter(a => a !== null); //removing null entries 
-                var langcount = {};
-                lang.forEach(function (k) {
-                    langcount[k] = (langcount[k] || 0) + 1;
-                }); // counting the number for each langugae
-                var sortedlang = ((Object.entries(langcount)).sort((a, b) => b[1] - a[1])).slice(0, 5);
-                var langlist = [];
-                var listcount = [];
-                for (i = 0; i < sortedlang.length; i++) {
-                    langlist[i] = sortedlang[i][0];
-                    listcount[i] = sortedlang[i][1];
-                }
-                var repolist = [];
-                var starcount = [];
-                for (i = 0; i < popular.length; i++) {
-                    repolist[i] = popular[i].name;
-                    starcount[i] = popular[i].stars;
-                }
-                repolist = repolist.slice(0, 5); //getting top 5 repo
-                starcount = starcount.slice(0, 5); //getting top 5 repo
-                console.log("Forks: " + totalForks + " " + "Stars: " + totalStars + " " + "Watchers: " + totalWatchers);
-        */
+        let usrrepo = new XMLHttpRequest();
+        usrrepo.open("GET", "https://api.github.com/users/" + user + "/repos", false);
+        usrrepo.send();
+        var repomaster = JSON.parse(usrrepo.response);
+        let i;
+        //count the forks,stars and watchers
+        var totalForks, totalStars, totalWatchers;
+        totalForks = 0;
+        totalStars = 0;
+        totalWatchers = 0;
+        var lang = new Array(repomaster.length); //to store popular langauges
+        var popular = []; //to store repo and stars
+        // getting the languages from the repositories
+        for (i = 0; i < repomaster.length; i++) {
+            lang[i] = repomaster[i].language;
+            //incrementing individual score
+            totalForks += repomaster[i].forks_count;
+            totalStars += repomaster[i].stargazers_count;
+            totalWatchers += repomaster[i].watchers_count;
+            //pushing repo name and stars
+            if (repomaster[i].fork === false) {
+                popular.push({
+                    'name': repomaster[i].name,
+                    'stars': repomaster[i].stargazers_count
+                });
+            }
+        }
+        popular = popular.sort(function (a, b) {
+            return b.stars - a.stars;
+        }) // sorting by most stars
+        popular = popular.filter(function (obj) {
+            return obj.stars !== 0;
+        }); // removing repositories with zero stars
+        lang = lang.filter(a => a !== null); //removing null entries 
+        var langcount = {};
+        lang.forEach(function (k) {
+            langcount[k] = (langcount[k] || 0) + 1;
+        }); // counting the number for each langugae
+        var sortedlang = ((Object.entries(langcount)).sort((a, b) => b[1] - a[1])).slice(0, 5);
+        var langlist = [];
+        var listcount = [];
+        for (i = 0; i < sortedlang.length; i++) {
+            langlist[i] = sortedlang[i][0];
+            listcount[i] = sortedlang[i][1];
+        }
+        var repolist = [];
+        var starcount = [];
+        for (i = 0; i < popular.length; i++) {
+            repolist[i] = popular[i].name;
+            starcount[i] = popular[i].stars;
+        }
+        repolist = repolist.slice(0, 5); //getting top 5 repo
+        starcount = starcount.slice(0, 5); //getting top 5 repo
+        let tt = document.getElementById('stats');
+        tt.innerHTML = "Forks: " + totalForks + " " + "Stars: " + totalStars + " " + "Watchers: " + totalWatchers;
+
         /*--------------------------------------------------------------------*/
 
         //analysis charts
-        /*        var ctx = document.getElementById('langac');
-                var config = {
-                    type: 'pie',
-                    data: {
-                        datasets: [{
-                            data: listcount,
-                            backgroundColor: [
+        var ctx = document.getElementById('langac');
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: listcount,
+                    backgroundColor: [
                     'rgba(255,99,132,1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
                     'rgba(153, 102, 255, 1)'
                 ],
-                            label: 'Top languages'
+                    label: 'Top languages'
                     }],
-                        labels: langlist
-                    },
-                    options: {
-                        responsive: true,
-                        legend: {
-                            position: 'left',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Top Languages'
-                        },
-                        animation: {
-                            animateScale: true,
-                            animateRotate: true
-                        }
-                    }
-                };
-                if (starcount.length > 1) {
-                    var ctx2 = document.getElementById("repo");
-                    var myChart = new Chart(ctx2, {
-                        type: 'bar',
-                        data: {
-                            labels: repolist,
-                            datasets: [{
-                                label: 'Number of stars',
-                                data: starcount,
-                                backgroundColor: [
+                labels: langlist
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'left',
+                },
+                title: {
+                    display: true,
+                    text: 'Top Languages'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        };
+        if (starcount.length > 1) {
+            var ctx2 = document.getElementById("repo");
+            var myChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: repolist,
+                    datasets: [{
+                        label: 'Number of stars',
+                        data: starcount,
+                        backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(255, 206, 86, 0.2)',
@@ -210,7 +210,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                         'rgba(153, 102, 255, 0.2)',
                         'rgba(255, 159, 64, 0.2)'
                     ],
-                                borderColor: [
+                        borderColor: [
                         'rgba(255,99,132,1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)',
@@ -218,34 +218,34 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)'
                     ],
-                                borderWidth: 1
+                        borderWidth: 1
                 }]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
                     }]
-                            },
-                            responsive: true,
-                            legend: {
-                                position: 'bottom',
-                            },
-                            title: {
-                                display: true,
-                                text: 'Top Repositories'
-                            },
-                        }
-                    });
-                }else{
-                    var errmsg = document.createElement('p');
-                    errmsg.innerHTML = 'No Popular Repositories';
-                    document.body.appendChild(errmsg);
+                    },
+                    responsive: true,
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Top Repositories'
+                    },
                 }
-                var mychart = new Chart(ctx, config);
-        */
+            });
+        } else {
+            //var errmsg = document.createElement('p');
+            //errmsg.innerHTML = 'No Popular Repositories';
+            //document.body.appendChild(errmsg);
+        }
+        var mychart = new Chart(ctx, config);
+
 
         //calling to get the activity of user
         let usrevent = new XMLHttpRequest();
