@@ -1,0 +1,78 @@
+html {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+body {
+    background-color: #f0f0f0;
+}
+
+#usersearch {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#searchbox {
+    width: 50%;
+    height: 20px;
+    padding: 1%;
+}
+
+h1,
+h3 {
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 0;
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
+#searchbtn {
+    padding: 0.5% 1%;
+    margin: 1%;
+    cursor: pointer;
+}
+
+#canvas {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#left {
+    width: 35%;
+}
+
+#profile {
+    background-color: white;
+    margin: 1%;
+    display: flex;
+    flex-direction: column;
+}
+
+#right {
+    width: 65%;
+}
+
+#repos {
+    background-color: white;
+    margin: 1%;
+}
+
+#events {
+    background-color: white;
+    margin: 1%;
+}
+
+#col1 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
