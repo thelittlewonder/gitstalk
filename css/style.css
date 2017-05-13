@@ -179,8 +179,44 @@ h3 {
     width: 35%;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 #col2 {
+    height: 100%;
     width: 65%;
+}
+
+.activity {
+    margin: 1%;
+    padding-bottom: 0.5%;
+    border-bottom: 1px solid #ddd;
+}
+
+.moment {
+    float: right;
+    color: #b8b8b8;
+}
+
+.activity>a {
+    color: #4bc0c0;
+    text-decoration: none;
+}
+
+.highlight {
+    color: #ff6384;
+}
+
+.highlight2 {
+    color: #36a2eb;
+}
+
+.small {
+    color: #b8b8b8;
+    margin-right: 5px;
+}
+
+
+#canvas{
+    display: none;
 }

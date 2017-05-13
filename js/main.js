@@ -37,7 +37,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         let profiledat = JSON.parse(usrprofile.response);
         //remove the search bar
         document.getElementById("usersearch").remove();
-
+        document.getElementById('canvas').style.display="block";
         //make call to get starred repos
         let stars = new XMLHttpRequest();
         stars.open("GET", "https://api.github.com/users/" + user + "/starred", false);
@@ -282,40 +282,52 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         for (i = 0; i < eventmaster.length; i++) {
             var t = new Date(eventmaster[i].created_at);
             var n = timeSince(t);
+            var urlt = eventmaster[i].repo.url;
+            urlt = urlt.replace('api', 'www');
+            urlt = urlt.replace('/repos', '');
             if (eventmaster[i].type === 'PushEvent') {
                 events.push({
                     'reponame': eventmaster[i].repo.name,
                     'commitnumbers': eventmaster[i].payload.size,
                     'timespan': t,
-                    'url': eventmaster[i].repo.url,
+                    'repourl': urlt,
                     'type': 'push',
                     'now': n
                 });
             } else if (eventmaster[i].type === 'CreateEvent') {
                 events.push({
                     'reponame': eventmaster[i].repo.name,
-                    'description': eventmaster[i].repo.url,
+                    'repourl': urlt,
                     'timespan': t,
                     'type': 'create',
                     'now': n
                 });
             } else if (eventmaster[i].type === 'ForkEvent') {
+                var lusr = user.length;
+                var lrepo = (eventmaster[i].repo.name).length
+                var fl = (eventmaster[i].repo.name).substr(lusr + 1, lrepo);
+                var furlt = eventmaster[i].payload.forkee.url;
+                furlt = furlt.replace('api', 'www');
+                furlt = furlt.replace('/repos', '');
                 events.push({
                     'reponame': eventmaster[i].repo.name,
-                    'repourl': eventmaster[i].repo.url,
+                    'repourl': urlt,
                     'timespan': t,
-                    'forkurl': eventmaster[i].payload.forkee.url,
+                    'forkurl': furlt,
+                    'forkrepo': 'littlewonder/' + fl,
                     'type': 'fork',
-                    'now': n,
                     'now': n
                 });
             } else if (eventmaster[i].type === 'PullRequestEvent') {
+                var prurlt = eventmaster[i].payload.pull_request.issue_url;
+                prurlt = prurlt.replace('api', 'www');
+                prurlt = prurlt.replace('/repos', '');
                 events.push({
                     'reponame': eventmaster[i].repo.name,
-                    'repourl': eventmaster[i].repo.url,
+                    'repourl': urlt,
                     'timespan': t,
                     'action': eventmaster[i].payload.action,
-                    'url': eventmaster[i].payload.pull_request.issue_url,
+                    'url': prurlt,
                     'additions': eventmaster[i].payload.pull_request.additions,
                     'deletions': eventmaster[i].payload.pull_request.deletions,
                     'type': 'pr',
@@ -324,7 +336,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
             } else if (eventmaster[i].type === 'WatchEvent') {
                 events.push({
                     'reponame': eventmaster[i].repo.name,
-                    'repourl': eventmaster[i].repo.url,
+                    'repourl': urlt,
                     'timespan': t,
                     'type': 'watch',
                     'now': n
@@ -332,7 +344,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
             } else if (eventmaster[i].type === 'DeleteEvent') {
                 events.push({
                     'reponame': eventmaster[i].repo.name,
-                    'repourl': eventmaster[i].repo.url,
+                    'repourl': urlt,
                     'timespan': t,
                     'ref': eventmaster[i].payload.ref,
                     'reftype': eventmaster[i].payload.ref_type,
@@ -342,7 +354,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
             } else if (eventmaster[i].type === 'PullRequestReviewCommentEvent') {
                 events.push({
                     'reponame': eventmaster[i].repo.name,
-                    'repourl': eventmaster[i].repo.url,
+                    'repourl': urlt,
                     'timespan': t,
                     'issue': eventmaster[i].payload.pull_request.body,
                     'comment': eventmaster[i].payload.comment.body,
@@ -353,7 +365,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
             } else if (eventmaster[i].type === 'IssueCommentEvent') {
                 events.push({
                     'reponame': eventmaster[i].repo.name,
-                    'repourl': eventmaster[i].repo.url,
+                    'repourl': urlt,
                     'timespan': t,
                     'issue': eventmaster[i].payload.issue.body,
                     'comment': eventmaster[i].payload.comment.body,
@@ -366,6 +378,83 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
             }
         }
         console.log(events);
+        for (i = 0; i < events.length; i++) {
+            if (events[i].type === 'push') {
+                let temp = document.createElement('p');
+                let temp2 = document.createElement('span');
+                temp.className = 'activity';
+                temp2.className = 'moment';
+                temp.innerHTML = '<i class="fa fa-check small"></i>'+'Pushed ' + events[i].commitnumbers + ' commits in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp2.innerHTML = events[i].now;
+                document.getElementById('timeline').appendChild(temp);
+                temp.appendChild(temp2);
+            } else if (events[i].type === 'create') {
+                let temp = document.createElement('p');
+                let temp2 = document.createElement('span');
+                temp.className = 'activity';
+                temp2.className = 'moment';
+                temp.innerHTML = '<i class="fa fa-plus small"></i>'+'Created the repository ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp2.innerHTML = events[i].now;
+                document.getElementById('timeline').appendChild(temp);
+                temp.appendChild(temp2);
+            } else if (events[i].type === 'fork') {
+                let temp = document.createElement('p');
+                let temp2 = document.createElement('span');
+                temp.className = 'activity';
+                temp2.className = 'moment';
+                temp.innerHTML = '<i class="fa fa-code-fork small"></i>'+'Forked ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>' + ' to ' + '<a href="' + events[i].forkurl + '">' + events[i].forkrepo + '</a>';
+                temp2.innerHTML = events[i].now;
+                document.getElementById('timeline').appendChild(temp);
+                temp.appendChild(temp2);
+            } else if (events[i].type === 'pr') {
+                let temp = document.createElement('p');
+                let temp2 = document.createElement('span');
+                temp.className = 'activity';
+                temp2.className = 'moment';
+                temp.innerHTML = '<i class="fa fa-exclamation-circle small"></i>'+events[i].action + '<a href="' + events[i].url + '">' + ' a Pull request ' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>' + ' with ' + events[i].additions + ' additions ' + 'and ' + events[i].deletions + ' deletions';
+                temp2.innerHTML = events[i].now;
+                document.getElementById('timeline').appendChild(temp);
+                temp.appendChild(temp2);
+            } else if (events[i].type === 'watch') {
+                let temp = document.createElement('p');
+                let temp2 = document.createElement('span');
+                temp.className = 'activity';
+                temp2.className = 'moment';
+                temp.innerHTML = '<i class="fa fa-eye small"></i>'+'Started Watching ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp2.innerHTML = events[i].now;
+                document.getElementById('timeline').appendChild(temp);
+                temp.appendChild(temp2);
+            } else if (events[i].type === 'delete') {
+                let temp = document.createElement('p');
+                let temp2 = document.createElement('span');
+                temp.className = 'activity';
+                temp2.className = 'moment';
+                temp.innerHTML = '<i class="fa fa-trash-o small"></i>'+'Deleted a ' + events[i].reftype + ' ' + '<span class="highlight">' + events[i].ref + '</span>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp2.innerHTML = events[i].now;
+                document.getElementById('timeline').appendChild(temp);
+                temp.appendChild(temp2);
+            } else if (events[i].type === 'prcomment') {
+                let temp = document.createElement('p');
+                let temp2 = document.createElement('span');
+                temp.className = 'activity';
+                temp2.className = 'moment';
+                temp.innerHTML = '<i class="fa fa-comment small"></i>'+'Made a comment on a '  + '<a href="' + events[i].issueurl + '">' + 'PR' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame ;
+                temp2.innerHTML = events[i].now;
+                document.getElementById('timeline').appendChild(temp);
+                temp.appendChild(temp2);
+            } else if (events[i].type === 'issuecomment') {
+                let temp = document.createElement('p');
+                let temp2 = document.createElement('span');
+                temp.className = 'activity';
+                temp2.className = 'moment';
+                temp.innerHTML = '<i class="fa fa-comment small"></i>'+'Made a comment on a '  + '<a href="' + events[i].issueurl + '">' + 'issue' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame ;
+                temp2.innerHTML = events[i].now;
+                document.getElementById('timeline').appendChild(temp);
+                temp.appendChild(temp2);
+            } else{
+                //
+            }
+        }
     } else {
         alert("User not found,enter valid username");
         document.usersearch.username.value = "";
