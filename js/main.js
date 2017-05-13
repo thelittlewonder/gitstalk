@@ -37,7 +37,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         let profiledat = JSON.parse(usrprofile.response);
         //remove the search bar
         document.getElementById("usersearch").remove();
-        document.getElementById('canvas').style.display="block";
+        document.getElementById('canvas').style.display = "block";
         //make call to get starred repos
         let stars = new XMLHttpRequest();
         stars.open("GET", "https://api.github.com/users/" + user + "/starred", false);
@@ -52,12 +52,16 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         if (profiledat.bio !== null) {
             var bio = document.getElementById('bio');
             bio.innerHTML = profiledat.bio;
+        } else {
+            document.getElementById('bio').remove();
         }
 
         //create the element for displaying location
         if (profiledat.location !== null) {
             var loc = document.getElementById('place');
             loc.innerHTML = profiledat.location;
+        } else {
+            document.getElementById('location').remove();
         }
 
         //create the element for displaying blog link
@@ -65,6 +69,8 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
             var blog = document.getElementById('bloglink');
             blog.innerHTML = profiledat.blog;
             blog.href = profiledat.blog;
+        } else {
+            document.getElementById('blog').remove();
         }
 
         //create the element for displaying dp
@@ -76,8 +82,50 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         var following = profiledat.following;
 
         //create the element for displaying joining date
+
         let joindate = document.getElementById('din');
-        joindate.innerHTML = "Github Member since " + (profiledat.created_at).substr(0, 10);
+        let year = ((profiledat.created_at).substr(0, 10)).substr(0, 4);
+        let month = (((profiledat.created_at).substr(0, 10)).substr(5, 6)).substr(0,2);
+        let monthvalue;
+        switch (month) {
+            case '01':
+                monthvalue = "January";
+                break;
+            case '02':
+                monthvalue = "February";
+                break;
+            case '03':
+                monthvalue = "March";
+                break;
+            case '04':
+                monthvalue = "April";
+                break;
+            case '05':
+                monthvalue = "May";
+                break;
+            case '06':
+                monthvalue = "June";
+                break;
+            case '07':
+                monthvalue = "July";
+                break;
+            case '08':
+                monthvalue = "August";
+                break;
+            case '09':
+                monthvalue = "September";
+                break;
+            case '10':
+                monthvalue = "October";
+                break;
+            case '11':
+                monthvalue = "November";
+                break;
+            case '12':
+                monthvalue = "December";
+                break;
+        }
+        joindate.innerHTML = "Joined " + monthvalue + ', ' + year;
 
         /*--------------------------------------------------------------------*/
         //calling to get the public repo of users
@@ -314,7 +362,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                     'repourl': urlt,
                     'timespan': t,
                     'forkurl': furlt,
-                    'forkrepo': 'littlewonder/' + fl,
+                    'forkrepo': user + '/' + fl,
                     'type': 'fork',
                     'now': n
                 });
@@ -384,7 +432,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-check small"></i>'+'Pushed ' + events[i].commitnumbers + ' commits in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp.innerHTML = '<i class="fa fa-check small"></i>' + 'Pushed ' + events[i].commitnumbers + ' commits in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -393,7 +441,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-plus small"></i>'+'Created the repository ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp.innerHTML = '<i class="fa fa-plus small"></i>' + 'Created the repository ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -402,7 +450,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-code-fork small"></i>'+'Forked ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>' + ' to ' + '<a href="' + events[i].forkurl + '">' + events[i].forkrepo + '</a>';
+                temp.innerHTML = '<i class="fa fa-code-fork small"></i>' + 'Forked ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>' + ' to ' + '<a href="' + events[i].forkurl + '">' + events[i].forkrepo + '</a>';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -411,7 +459,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-exclamation-circle small"></i>'+events[i].action + '<a href="' + events[i].url + '">' + ' a Pull request ' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>' + ' with ' + events[i].additions + ' additions ' + 'and ' + events[i].deletions + ' deletions';
+                temp.innerHTML = '<i class="fa fa-exclamation-circle small"></i>' + events[i].action + '<a href="' + events[i].url + '">' + ' a Pull request ' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>' + ' with ' + events[i].additions + ' additions ' + 'and ' + events[i].deletions + ' deletions';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -420,7 +468,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-eye small"></i>'+'Started Watching ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp.innerHTML = '<i class="fa fa-eye small"></i>' + 'Started Watching ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -429,7 +477,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-trash-o small"></i>'+'Deleted a ' + events[i].reftype + ' ' + '<span class="highlight">' + events[i].ref + '</span>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp.innerHTML = '<i class="fa fa-trash-o small"></i>' + 'Deleted a ' + events[i].reftype + ' ' + '<span class="highlight">' + events[i].ref + '</span>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -438,7 +486,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-comment small"></i>'+'Made a comment on a '  + '<a href="' + events[i].issueurl + '">' + 'PR' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame ;
+                temp.innerHTML = '<i class="fa fa-comment small"></i>' + 'Made a comment on a ' + '<a href="' + events[i].issueurl + '">' + 'PR' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame;
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -447,11 +495,11 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-comment small"></i>'+'Made a comment on a '  + '<a href="' + events[i].issueurl + '">' + 'issue' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame ;
+                temp.innerHTML = '<i class="fa fa-comment small"></i>' + 'Made a comment on a ' + '<a href="' + events[i].issueurl + '">' + 'issue' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame;
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
-            } else{
+            } else {
                 //
             }
         }
