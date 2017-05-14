@@ -226,15 +226,14 @@ h3 {
 #row0 {
     position: relative;
     top: 0;
-    height: 40px;
     background-color: white;
-    width: 100%;
 }
 
 #searcha {
     float: right;
     margin-top: 10px;
     margin-right: 20px;
+    margin-bottom: 10px;
 }
 
 #searchboxa {
@@ -254,12 +253,18 @@ h3 {
     font-size: 1.3em;
 }
 
-
-#formwrap{
+#formwrap {
     display: flex;
     margin-top: 20%;
     flex-direction: column;
     justify-content: center;
     align-content: center;
     align-items: center;
+}
+
+#logo {
+    height: 20px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 10px;
 }
