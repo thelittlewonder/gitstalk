@@ -1,0 +1,507 @@
+/*****loader-styles*****/
+
+#loader-wrap {
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background-color: #f5f5f5;
+}
+
+.loader-container {
+    background-color: #fff;
+    margin: 0 auto;
+    width: 100px;
+    padding: 50px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    margin-top: 15%;
+}
+
+.loader-chart {
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+
+.loader-horizontal,
+.loader-vertical {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: #d3d3d2;
+    height: 3px;
+}
+
+.loader-horizontal:before,
+.loader-vertical:before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 3px solid #d3d3d2;
+    position: absolute;
+}
+
+.loader-horizontal {
+    height: 3px;
+    width: 100%;
+    -webkit-animation: horizontal 2.5s linear infinite;
+    animation: horizontal 2.5s linear infinite;
+}
+
+.loader-horizontal:before {
+    margin-right: -11px;
+    margin-top: -5.5px;
+    top: 0;
+    right: 0;
+    -webkit-animation: horizontal-circle 2.5s linear infinite;
+    animation: horizontal-circle 2.5s linear infinite;
+}
+
+.loader-vertical {
+    width: 3px;
+    height: 100%;
+    -webkit-animation: vertical 2.5s linear infinite;
+    animation: vertical 2.5s linear infinite;
+}
+
+.loader-vertical:before {
+    margin-left: -5.5px;
+    margin-top: -11px;
+    top: 0;
+    left: 0;
+    -webkit-animation: vertical-circle 2.5s linear infinite;
+    animation: vertical-circle 2.5s linear infinite;
+}
+
+.loader-line1,
+.loader-line2,
+.loader-line3,
+.loader-line4 {
+    width: 8px;
+    height: 50%;
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    border-radius: 8px;
+}
+
+.loader-line1 {
+    background-color: rgba(255, 99, 132, 1);
+}
+
+.loader-line2 {
+    background-color: rgba(54, 162, 235, 1);
+}
+
+.loader-line3 {
+    background-color: rgba(255, 206, 86, 1);
+}
+
+.loader-line4 {
+    background-color: rgba(75, 192, 192, 1);
+}
+
+.loader-line1 {
+    left: 20%;
+    height: 62%;
+    -webkit-animation: line1 2.5s linear infinite;
+    animation: line1 2.5s linear infinite;
+}
+
+.loader-line2 {
+    left: 40%;
+    height: 38%;
+    -webkit-animation: line2 2.5s linear infinite;
+    animation: line2 2.5s linear infinite;
+}
+
+.loader-line3 {
+    left: 60%;
+    height: 23%;
+    -webkit-animation: line3 2.5s linear infinite;
+    animation: line3 2.5s linear infinite;
+}
+
+.loader-line4 {
+    left: 80%;
+    height: 37%;
+    -webkit-animation: line4 2.5s linear infinite;
+    animation: line4 2.5s linear infinite;
+}
+
+@-webkit-keyframes vertical {
+    0% {
+        height: 0;
+    }
+    10% {
+        height: 50%;
+    }
+    20%,
+    90% {
+        height: 100%;
+    }
+    100% {
+        height: 0%;
+    }
+}
+
+@keyframes vertical {
+    0% {
+        height: 0;
+    }
+    10% {
+        height: 50%;
+    }
+    20%,
+    90% {
+        height: 100%;
+    }
+    100% {
+        height: 0%;
+    }
+}
+
+@-webkit-keyframes horizontal {
+    0% {
+        width: 0;
+    }
+    10% {
+        width: 25%;
+    }
+    20% {
+        width: 75%;
+    }
+    30%,
+    90% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}
+
+@keyframes horizontal {
+    0% {
+        width: 0;
+    }
+    10% {
+        width: 25%;
+    }
+    20% {
+        width: 75%;
+    }
+    30%,
+    90% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}
+
+@-webkit-keyframes horizontal-circle {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateZ(0) scale(0);
+        transform: translateZ(0) scale(0);
+    }
+    20% {
+        opacity: 0;
+    }
+    30%,
+    90% {
+        opacity: 1;
+        -webkit-transform: translateZ(0) scale(1);
+        transform: translateZ(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translateZ(0) scale(0);
+        transform: translateZ(0) scale(0);
+    }
+}
+
+@keyframes horizontal-circle {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateZ(0) scale(0);
+        transform: translateZ(0) scale(0);
+    }
+    20% {
+        opacity: 0;
+    }
+    30%,
+    90% {
+        opacity: 1;
+        -webkit-transform: translateZ(0) scale(1);
+        transform: translateZ(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translateZ(0) scale(0);
+        transform: translateZ(0) scale(0);
+    }
+}
+
+@-webkit-keyframes vertical-circle {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateZ(0) scale(0);
+        transform: translateZ(0) scale(0);
+    }
+    10% {
+        opacity: 0;
+    }
+    20%,
+    90% {
+        opacity: 1;
+        -webkit-transform: translateZ(0) scale(1);
+        transform: translateZ(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translateZ(0) scale(0);
+        transform: translateZ(0) scale(0);
+    }
+}
+
+@keyframes vertical-circle {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateZ(0) scale(0);
+        transform: translateZ(0) scale(0);
+    }
+    10% {
+        opacity: 0;
+    }
+    20%,
+    90% {
+        opacity: 1;
+        -webkit-transform: translateZ(0) scale(1);
+        transform: translateZ(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translateZ(0) scale(0);
+        transform: translateZ(0) scale(0);
+    }
+}
+
+@-webkit-keyframes line1 {
+    0% {
+        height: 0;
+    }
+    30% {
+        height: 0;
+    }
+    40% {
+        height: 7%;
+    }
+    50% {
+        height: 38%;
+    }
+    60% {
+        height: 62%;
+    }
+    70% {
+        height: 89%;
+    }
+    80%,
+    90% {
+        height: 62%;
+    }
+    100% {
+        height: 0%;
+    }
+}
+
+@keyframes line1 {
+    0% {
+        height: 0;
+    }
+    30% {
+        height: 0;
+    }
+    40% {
+        height: 7%;
+    }
+    50% {
+        height: 38%;
+    }
+    60% {
+        height: 62%;
+    }
+    70% {
+        height: 89%;
+    }
+    80%,
+    90% {
+        height: 62%;
+    }
+    100% {
+        height: 0%;
+    }
+}
+
+@-webkit-keyframes line2 {
+    0% {
+        height: 0;
+    }
+    40% {
+        height: 0;
+    }
+    50% {
+        height: 26%;
+    }
+    60% {
+        height: 38%;
+    }
+    70% {
+        height: 23%;
+    }
+    80%,
+    90% {
+        height: 38%;
+    }
+    100% {
+        height: 0%;
+    }
+}
+
+@keyframes line2 {
+    0% {
+        height: 0;
+    }
+    40% {
+        height: 0;
+    }
+    50% {
+        height: 26%;
+    }
+    60% {
+        height: 38%;
+    }
+    70% {
+        height: 23%;
+    }
+    80%,
+    90% {
+        height: 38%;
+    }
+    100% {
+        height: 0%;
+    }
+}
+
+@-webkit-keyframes line3 {
+    0% {
+        height: 0;
+    }
+    40% {
+        height: 0;
+    }
+    50% {
+        height: 9%;
+    }
+    60% {
+        height: 23%;
+    }
+    70% {
+        height: 61%;
+    }
+    80%,
+    90% {
+        height: 23%;
+    }
+    100% {
+        height: 0%;
+    }
+}
+
+@keyframes line3 {
+    0% {
+        height: 0;
+    }
+    40% {
+        height: 0;
+    }
+    50% {
+        height: 9%;
+    }
+    60% {
+        height: 23%;
+    }
+    70% {
+        height: 61%;
+    }
+    80%,
+    90% {
+        height: 23%;
+    }
+    100% {
+        height: 0%;
+    }
+}
+
+@-webkit-keyframes line4 {
+    0% {
+        height: 0;
+    }
+    40% {
+        height: 0;
+    }
+    50% {
+        height: 45%;
+    }
+    60% {
+        height: 37%;
+    }
+    70% {
+        height: 83%;
+    }
+    80%,
+    90% {
+        height: 37%;
+    }
+    100% {
+        height: 0%;
+    }
+}
+
+@keyframes line4 {
+    0% {
+        height: 0;
+    }
+    40% {
+        height: 0;
+    }
+    50% {
+        height: 45%;
+    }
+    60% {
+        height: 37%;
+    }
+    70% {
+        height: 83%;
+    }
+    80%,
+    90% {
+        height: 37%;
+    }
+    100% {
+        height: 0%;
+    }
+}
+
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}

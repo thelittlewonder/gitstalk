@@ -27,6 +27,7 @@ p {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    z-index: 200;
 }
 
 #searchbox {
@@ -51,6 +52,7 @@ button:focus {
 h1,
 h3 {
     font-weight: 100;
+    text-align: center;
 }
 
 h1 {
@@ -75,6 +77,7 @@ h3 {
     display: flex;
     flex-direction: column;
     overflow: visible;
+    z-index: 300;
 }
 
 .card {
@@ -176,7 +179,7 @@ h3 {
 }
 
 #col1 {
-    width:35%;
+    width: 35%;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -216,12 +219,11 @@ h3 {
     margin-right: 5px;
 }
 
-
-#canvas{
+#canvas {
     display: none;
 }
 
-#row0{
+#row0 {
     position: relative;
     top: 0;
     height: 40px;
@@ -229,25 +231,35 @@ h3 {
     width: 100%;
 }
 
-#searcha{
+#searcha {
     float: right;
     margin-top: 10px;
     margin-right: 20px;
 }
 
-#searchboxa{
+#searchboxa {
     width: 200px;
 }
 
-#dp{
+#dp {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#github{
+#github {
     text-decoration: none;
     margin-top: 5px;
     color: rgba(75, 192, 192, 1);
     font-size: 1.3em;
+}
+
+
+#formwrap{
+    display: flex;
+    margin-top: 20%;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
 }
