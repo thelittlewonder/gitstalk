@@ -24,10 +24,53 @@ var timeSince = function (timeStamp) {
         return day + " " + month + year;
     }
 }
-document.getElementById('usersearch').addEventListener('submit', function (e) {
+
+var searchhome = function (e) {
     e.preventDefault();
+    let user = document.usersearch.username.value;
+    letsrock(e, user);
+};
+
+var searchresult = function (e) {
+    e.preventDefault();
+    console.log('default prevented');
+
+
+    let user = document.searcha.username1.value;
+    console.log(user + ' to be searched');
+
+    document.getElementById('statsc').remove();
+    console.log('statsc removed');
+    let child1 = document.createElement('canvas');
+    child1.id = 'statsc';
+    document.getElementById('statsgraph').appendChild(child1);
+    console.log('statsc added');
+
+    if (document.getElementById('repoc') !== null) {
+        document.getElementById('row2').style.display = 'block';
+        document.getElementById('repoc').remove();
+        console.log('repoc removed');
+        let child2 = document.createElement('canvas');
+        child2.id = 'repoc';
+        document.getElementById('repograph').appendChild(child2);
+        console.log('repo added');
+    }
+
+    document.getElementById('langc').remove();
+    console.log('langc removed');
+    let child3 = document.createElement('canvas');
+    child3.id = 'langc';
+    document.getElementById('langgraph').appendChild(child3);
+    console.log('langc added');
+
+    var foo = document.getElementById('timeline');
+    while (foo.firstChild) foo.removeChild(foo.firstChild);
+
+    letsrock(e, user);
+};
+
+var letsrock = function (e, user) {
     console.log("Form Submitted");
-    let user = document.usersearch.username.value
     console.log("Search Request for " + user);
     let usrprofile = new XMLHttpRequest();
     usrprofile.open("GET", "https://api.github.com/users/" + user, false);
@@ -36,7 +79,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
 
         let profiledat = JSON.parse(usrprofile.response);
         //remove the search bar
-        document.getElementById("usersearch").remove();
+        document.getElementById("usersearch").style.display = "none";
         document.getElementById('canvas').style.display = "block";
         //make call to get starred repos
         let stars = new XMLHttpRequest();
@@ -53,7 +96,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
             var bio = document.getElementById('bio');
             bio.innerHTML = profiledat.bio;
         } else {
-            document.getElementById('bio').remove();
+            document.getElementById('bio').style.display = "none";
         }
 
         //create the element for displaying location
@@ -61,7 +104,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
             var loc = document.getElementById('place');
             loc.innerHTML = profiledat.location;
         } else {
-            document.getElementById('location').remove();
+            document.getElementById('location').style.display = "none";
         }
 
         //create the element for displaying blog link
@@ -70,7 +113,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
             blog.innerHTML = profiledat.blog;
             blog.href = profiledat.blog;
         } else {
-            document.getElementById('blog').remove();
+            document.getElementById('blog').style.display = "none";
         }
 
         //create the element for displaying dp
@@ -85,7 +128,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
 
         let joindate = document.getElementById('din');
         let year = ((profiledat.created_at).substr(0, 10)).substr(0, 4);
-        let month = (((profiledat.created_at).substr(0, 10)).substr(5, 6)).substr(0,2);
+        let month = (((profiledat.created_at).substr(0, 10)).substr(5, 6)).substr(0, 2);
         let monthvalue;
         switch (month) {
             case '01':
@@ -186,7 +229,6 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         /*--------------------------------------------------------------------*/
 
         //analysis charts
-
         var ctx0 = document.getElementById('statsc');
         var statsdata = {
             datasets: [{
@@ -214,7 +256,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         "Total Watchers"
     ]
         };
-        var merachart = new Chart(ctx0, {
+        var mychart0 = new Chart(ctx0, {
             data: statsdata,
             type: 'doughnut',
             options: {
@@ -267,11 +309,11 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 maintainAspectRatio: false
             }
         };
-        var mychart = new Chart(ctx, config);
+        var mychart1 = new Chart(ctx, config);
 
         if (starcount.length > 1) {
             var ctx2 = document.getElementById("repoc");
-            var myChart = new Chart(ctx2, {
+            var myChart2 = new Chart(ctx2, {
                 type: 'bar',
                 data: {
                     labels: repolist,
@@ -316,9 +358,9 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 }
             });
         } else {
+            document.getElementById('row2').style.display = "none";
             console.log('Gareeb hai tu');
         }
-
         //calling to get the activity of user
         let usrevent = new XMLHttpRequest();
         usrevent.open("GET", "https://api.github.com/users/" + user + "/events", false);
@@ -468,7 +510,7 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-eye small"></i>' + 'Started Watching ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp.innerHTML = '<i class="fa fa-star small"></i>' + 'Starred the repo ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -507,4 +549,8 @@ document.getElementById('usersearch').addEventListener('submit', function (e) {
         alert("User not found,enter valid username");
         document.usersearch.username.value = "";
     }
-});
+};
+
+document.getElementById('usersearch').addEventListener('submit', searchhome);
+
+document.getElementById('searcha').addEventListener('submit', searchresult);

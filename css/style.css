@@ -220,3 +220,17 @@ h3 {
 #canvas{
     display: none;
 }
+
+#row0{
+    position: relative;
+    top: 0;
+    height: 40px;
+    background-color: white;
+    width: 100%;
+}
+
+#searcha{
+    float: right;
+    margin-top: 10px;
+    margin-right: 20px;
+}
