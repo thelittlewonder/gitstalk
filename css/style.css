@@ -176,7 +176,7 @@ h3 {
 }
 
 #col1 {
-    width: 35%;
+    width:35%;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -233,4 +233,21 @@ h3 {
     float: right;
     margin-top: 10px;
     margin-right: 20px;
+}
+
+#searchboxa{
+    width: 200px;
+}
+
+#dp{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#github{
+    text-decoration: none;
+    margin-top: 5px;
+    color: rgba(75, 192, 192, 1);
+    font-size: 1.3em;
 }

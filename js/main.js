@@ -69,7 +69,8 @@ var letsrock = function (e, user) {
     usrprofile.open("GET", "https://api.github.com/users/" + user, false);
     usrprofile.send();
     if (usrprofile.status !== 404) {
-
+        document.getElementById('github').href = "https://www.github.com/" + user;
+        document.getElementById('github').innerHTML = '@' + user;
         let profiledat = JSON.parse(usrprofile.response);
         //remove the search bar
         document.getElementById("usersearch").style.display = "none";
