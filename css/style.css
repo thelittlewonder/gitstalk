@@ -28,12 +28,21 @@ p {
     justify-content: center;
     align-items: center;
     z-index: 200;
+    position: relative;
+    top: 50px;
 }
 
 #searchbox {
-    width: 50%;
+    width: 35%;
     height: 20px;
     padding: 1%;
+    background: transparent;
+    border: 1px solid rgba(90, 90, 90, 0.2);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-weight: 100;
+    text-align: center;
+    position: relative;
+    top: 50px;
 }
 
 input:focus {
@@ -49,18 +58,10 @@ button:focus {
     outline: none;
 }
 
-h1,
 h3 {
     font-weight: 100;
     text-align: center;
-}
-
-h1 {
-    font-size: 3em;
-    margin-bottom: 0;
-}
-
-h3 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     font-size: 1.5em;
 }
 
@@ -68,6 +69,21 @@ h3 {
     padding: 0.5% 1%;
     margin: 1%;
     cursor: pointer;
+    position: relative;
+    top: 50px;
+    background-color: #5a5a5a;
+    color: white;
+    font-family: 'Proxima Nova';
+    font-weight: 100;
+    border: none;
+    border-radius: 5px;
+    transition-property: all;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
+}
+
+#searchbtn:hover{
+    transform: scale(1.1);
 }
 
 
@@ -267,4 +283,9 @@ h3 {
     margin-top: 10px;
     margin-left: 20px;
     margin-bottom: 10px;
+}
+
+#logo2 {
+    height: 50px;
+    margin-top: 50px;
 }
