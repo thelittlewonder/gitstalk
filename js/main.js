@@ -33,35 +33,28 @@ var searchhome = function (e) {
 
 var searchresult = function (e) {
     e.preventDefault();
-    console.log('default prevented');
-
 
     let user = document.searcha.username1.value;
-    console.log(user + ' to be searched');
+    //new search request
 
     document.getElementById('statsc').remove();
-    console.log('statsc removed');
     let child1 = document.createElement('canvas');
     child1.id = 'statsc';
     document.getElementById('statsgraph').appendChild(child1);
-    console.log('statsc added');
+    //removing already existing canvas and readding it
 
     if (document.getElementById('repoc') !== null) {
         document.getElementById('row2').style.display = 'block';
         document.getElementById('repoc').remove();
-        console.log('repoc removed');
         let child2 = document.createElement('canvas');
         child2.id = 'repoc';
         document.getElementById('repograph').appendChild(child2);
-        console.log('repo added');
     }
 
     document.getElementById('langc').remove();
-    console.log('langc removed');
     let child3 = document.createElement('canvas');
     child3.id = 'langc';
     document.getElementById('langgraph').appendChild(child3);
-    console.log('langc added');
 
     var foo = document.getElementById('timeline');
     while (foo.firstChild) foo.removeChild(foo.firstChild);
@@ -95,7 +88,9 @@ var letsrock = function (e, user) {
         if (profiledat.bio !== null) {
             var bio = document.getElementById('bio');
             bio.innerHTML = profiledat.bio;
+            bio.style.display = "block";
         } else {
+            console.log('i hid it');
             document.getElementById('bio').style.display = "none";
         }
 
@@ -103,7 +98,9 @@ var letsrock = function (e, user) {
         if (profiledat.location !== null) {
             var loc = document.getElementById('place');
             loc.innerHTML = profiledat.location;
+            document.getElementById('location').style.display = "block";
         } else {
+            console.log('i hid it');
             document.getElementById('location').style.display = "none";
         }
 
@@ -112,7 +109,9 @@ var letsrock = function (e, user) {
             var blog = document.getElementById('bloglink');
             blog.innerHTML = profiledat.blog;
             blog.href = profiledat.blog;
+            document.getElementById('blog').style.display = "block";
         } else {
+            console.log('i hid it');
             document.getElementById('blog').style.display = "none";
         }
 
