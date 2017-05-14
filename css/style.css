@@ -243,17 +243,20 @@ h3 {
     position: relative;
     top: 0;
     background-color: white;
-}
-
-#searcha {
-    float: right;
-    margin-top: 10px;
-    margin-right: 20px;
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #searchboxa {
     width: 200px;
+    background: transparent;
+    border: 1px solid rgba(90, 90, 90, 0.2);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-weight: 100;
+    text-align: center;
+    padding: 0.5em 1em;
 }
 
 #dp {
@@ -316,4 +319,22 @@ h3 {
 
 #footer>p>a {
     color: #5a5a5a;
+}
+
+#searchbtna {
+    background-color: #5a5a5a;
+    color: white;
+    font-family: 'Proxima Nova';
+    font-weight: 100;
+    border: none;
+    font-size: 1em;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
 }
