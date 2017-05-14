@@ -555,28 +555,3 @@ var letsrock = function (e, user) {
 document.getElementById('usersearch').addEventListener('submit', searchhome);
 
 document.getElementById('searcha').addEventListener('submit', searchresult);
-
-
-/*Form Animation*/
-/*source:http://codepen.io/ky0suke/pen/RWmxqQ*/
-$('form').submit(function (e) {
-    e.preventDefault();
-    if ($(this).hasClass('active'))
-        $(this).removeClass('active');
-});
-
-$('.search span').click(function (e) {
-
-    var $parent = $(this).parent();
-
-    if (!$parent.hasClass('active')) {
-
-        $parent
-            .addClass('active')
-            .find('input:first')
-            .on('blur', function () {
-                if (!$(this).val().length) $parent.removeClass('active');
-            });
-
-    }
-});
