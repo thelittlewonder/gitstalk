@@ -473,7 +473,7 @@ var letsrock = function (e, user) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-check small"></i>' + 'Pushed ' + events[i].commitnumbers + ' commits in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp.innerHTML = '<i class="fa fa-check small"></i>' + 'Pushed ' + events[i].commitnumbers + ' commits in ' + '<a href="' + events[i].repourl + '" target="_blank">' + events[i].reponame + '</a>';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -482,7 +482,7 @@ var letsrock = function (e, user) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-plus small"></i>' + 'Created the repository ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp.innerHTML = '<i class="fa fa-plus small"></i>' + 'Created the repository ' + '<a href="' + events[i].repourl + '" target="_blank">' + events[i].reponame + '</a>';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -491,7 +491,7 @@ var letsrock = function (e, user) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-code-fork small"></i>' + 'Forked ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>' + ' to ' + '<a href="' + events[i].forkurl + '">' + events[i].forkrepo + '</a>';
+                temp.innerHTML = '<i class="fa fa-code-fork small"></i>' + 'Forked ' + '<a href="' + events[i].repourl + '" target="_blank">' + events[i].reponame + '</a>' + ' to ' + '<a href="' + events[i].forkurl + '" target="_blank">' + events[i].forkrepo + '</a>';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -500,7 +500,7 @@ var letsrock = function (e, user) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-exclamation-circle small"></i>' + events[i].action + '<a href="' + events[i].url + '">' + ' a Pull request ' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>' + ' with ' + events[i].additions + ' additions ' + 'and ' + events[i].deletions + ' deletions';
+                temp.innerHTML = '<i class="fa fa-exclamation-circle small"></i>' + events[i].action + '<a href="' + events[i].url + '" target="_blank">' + ' a Pull request ' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '" target="_blank">' + events[i].reponame + '</a>' + ' with ' + events[i].additions + ' additions ' + 'and ' + events[i].deletions + ' deletions';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -509,7 +509,7 @@ var letsrock = function (e, user) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-star small"></i>' + 'Starred the repo ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp.innerHTML = '<i class="fa fa-star small"></i>' + 'Starred the repo ' + '<a href="' + events[i].repourl + '" target="_blank">' + events[i].reponame + '</a>';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -518,7 +518,7 @@ var letsrock = function (e, user) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-trash-o small"></i>' + 'Deleted a ' + events[i].reftype + ' ' + '<span class="highlight">' + events[i].ref + '</span>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame + '</a>';
+                temp.innerHTML = '<i class="fa fa-trash-o small"></i>' + 'Deleted a ' + events[i].reftype + ' ' + '<span class="highlight">' + events[i].ref + '</span>' + ' in ' + '<a href="' + events[i].repourl + '" target="_blank">' + events[i].reponame + '</a>';
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -527,7 +527,7 @@ var letsrock = function (e, user) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-comment small"></i>' + 'Made a comment on a ' + '<a href="' + events[i].issueurl + '">' + 'PR' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame;
+                temp.innerHTML = '<i class="fa fa-comment small"></i>' + 'Made a comment on a ' + '<a href="' + events[i].issueurl + '" target="_blank">' + 'PR' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame;
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
@@ -536,7 +536,7 @@ var letsrock = function (e, user) {
                 let temp2 = document.createElement('span');
                 temp.className = 'activity';
                 temp2.className = 'moment';
-                temp.innerHTML = '<i class="fa fa-comment small"></i>' + 'Made a comment on a ' + '<a href="' + events[i].issueurl + '">' + 'issue' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame;
+                temp.innerHTML = '<i class="fa fa-comment small"></i>' + 'Made a comment on a ' + '<a href="' + events[i].issueurl + '" target="_blank">' + 'issue' + '</a>' + ' in ' + '<a href="' + events[i].repourl + '">' + events[i].reponame;
                 temp2.innerHTML = events[i].now;
                 document.getElementById('timeline').appendChild(temp);
                 temp.appendChild(temp2);
