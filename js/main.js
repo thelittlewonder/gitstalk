@@ -74,6 +74,7 @@ var letsrock = function (e, user) {
         document.getElementById('github').innerHTML = '@' + user;
         let profiledat = JSON.parse(usrprofile.response);
         //remove the search bar
+        document.getElementById('footer').className='hidden';
         document.getElementById("usersearch").style.display = "none";
         document.getElementById('canvas').style.display = "block";
         //make call to get starred repos
