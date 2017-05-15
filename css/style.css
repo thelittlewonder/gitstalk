@@ -35,7 +35,7 @@ p {
 #searchbox {
     width: 35%;
     height: 20px;
-    padding: 1%;
+    padding: 1em;
     background: transparent;
     border: 1px solid rgba(90, 90, 90, 0.2);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -66,8 +66,8 @@ h3 {
 }
 
 #searchbtn {
-    padding: 0.5% 1%;
-    margin: 1%;
+    padding: 0.5em 1em;
+    margin: 1em;
     cursor: pointer;
     position: relative;
     top: 50px;
