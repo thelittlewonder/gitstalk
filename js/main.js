@@ -74,7 +74,7 @@ var letsrock = function (e, user) {
         document.getElementById('github').innerHTML = '@' + user;
         let profiledat = JSON.parse(usrprofile.response);
         //remove the search bar
-        document.getElementById('footer').className='hidden';
+        document.getElementById('footer').className = 'hidden';
         document.getElementById("usersearch").style.display = "none";
         document.getElementById('canvas').style.display = "block";
         //make call to get starred repos
@@ -550,6 +550,9 @@ var letsrock = function (e, user) {
     } else {
         alert("User not found,enter valid username");
         document.usersearch.username.value = "";
+        if (document.getElementById('canvas').style.display === "block") {
+            location.reload();
+        }
     }
 };
 
