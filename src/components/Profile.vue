@@ -5,11 +5,12 @@
       Loading...
     </div>
     <div v-else>
-      <div v-for="activity in result" :key="activity.id">
+      <div v-if="!showError">{{profile}}</div>
+      <div v-for="activity in activities" :key="activity.id">
         {{activity.id}}
       </div>
-      <div v-if="result.length===0">Username does not exists</div>
     </div>
+    <div v-if="showError">Username does not exists</div>
   </div>
 </template>
 
@@ -19,21 +20,29 @@ export default {
   name: "Profile",
   data() {
     return {
-      result: [],
+      profile: [],
+      activities: [],
       loading: true,
-      error: ""
+      showError: false
     };
   },
   mounted: function() {
     let user = this.$route.params.id;
     axios
-      .get("https://api.github.com/users/" + user + "/events")
+      .get("https://api.github.com/users/" + user)
       .then(result => {
-        this.result = result.data;
-        this.loading = false;
+        this.profile = result.data;
+        axios
+          .get("https://api.github.com/users/" + user + "/events")
+          .then(result => {
+            this.activities = result.data;
+            this.loading = false;
+          });
       })
       .catch(err => {
-        this.error = err;
+        console.log(err);
+        this.loading = false;
+        this.showError = true;
       });
   }
 };
