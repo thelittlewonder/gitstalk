@@ -179,7 +179,7 @@ export default {
           break;
         case "CreateEvent":
           stmnt = "Created a " + activity.payload.ref_type + " ";
-          if (activity.payload.ref_type === 'branch') {
+          if (activity.payload.ref_type === "branch") {
             stmnt +=
               '<a href="' +
               this.cleanURL(activity.repo.url) +
@@ -193,6 +193,12 @@ export default {
           } else {
             stmnt += repoURL;
           }
+          break;
+        case "DeleteEvent":
+          stmnt = "Deleted a " + activity.payload.ref_type + " " + activity.payload.ref + " from " + repoURL;
+          break;
+        case "ForkEvent":
+          stmnt = "Forked a repo " + repoURL +' to '+ '<a href="' + activity.payload.forkee.html_url + '">'+ activity.payload.forkee.full_name +'</a>';
           break;
       }
       return stmnt;
