@@ -14,17 +14,19 @@ export default {
 </script>
 
 <style lang="scss">
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition-property: opacity;
-  transition-duration: .25s;
+  transition-duration: 0.25s;
 }
 
 .fade-enter-active {
-  transition-delay: .25s;
+  transition-delay: 0.25s;
 }
 
-.fade-enter, .fade-leave-active {
-  opacity: 0
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 html {
   font-family: "Rubik";
@@ -51,5 +53,35 @@ a {
 .expand:hover:after {
   transform: scaleX(1);
   transform-origin: 0 50%;
+}
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 100px auto;
+  background-color: #5c75f6;
+  border-radius: 100%;
+  -webkit-animation: sk-scaleout 1s infinite ease-in-out;
+  animation: sk-scaleout 1s infinite ease-in-out;
+}
+@-webkit-keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 0;
+  }
 }
 </style>

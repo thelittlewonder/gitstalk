@@ -14,11 +14,7 @@
             </form>
         </div>
     </header>
-    <transition name="fade">
-        <div v-if="loading">
-            Loading...
-        </div>
-    </transition>
+        <div class="spinner" v-if="loading"></div>
     <transition name="fade">
         <div v-if="!showError&&!loading" class="main">
             <aside>
@@ -80,7 +76,15 @@
         </div>
     </transition>
     <transition name="fade">
-        <div v-if="showError&&!loading">error</div>
+        <div v-if="showError&&!loading" class="error">
+          <div class="octocat">
+            <img src="../assets/errorCat.png">
+          </div>
+          <div class="message">
+            <h2>Username not found.</h2>
+            <h3>Even our strongest octocat failed to find it.</h3>
+          </div>
+        </div>
     </transition>
     <transition name="fade">
         <Foot v-if="!showError&&!loading"></Foot>
@@ -415,6 +419,29 @@ header {
     }
   }
 }
+.error {
+  border: 1px solid #f7f7f7;
+  box-sizing: border-box;
+  border-radius: 2px;
+  display: flex;
+  background-color: #fff;
+  padding: 2em;
+  align-items: center;
+  .message {
+    display: flex;
+    flex-direction: column;
+    h2 {
+      font-size: 1.5em;
+      letter-spacing: 0.01em;
+      color: #000000;
+    }
+    h3 {
+      line-height: 1.5em;
+      font-size: 1em;
+      color: #666666;
+    }
+  }
+}
 .main {
   aside {
     .about {
@@ -619,6 +646,14 @@ header {
       }
     }
   }
+
+  .error {
+    flex-direction: column;
+    justify-content: center;
+    h2 {
+      margin-bottom: 0.5em;
+    }
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -641,6 +676,15 @@ header {
           justify-content: space-between;
         }
       }
+    }
+  }
+  .error {
+    flex-direction: row;
+    .octocat {
+      margin-right: 1.5em;
+    }
+    h2 {
+      margin-bottom: 0.825em;
     }
   }
 }
