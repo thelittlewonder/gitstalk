@@ -26,7 +26,7 @@ export default {
       repos: [],
       loading: true,
       showError: false,
-      activityCount: 15
+      activityCount: 30
     };
   },
   mounted: function() {
@@ -195,10 +195,50 @@ export default {
           }
           break;
         case "DeleteEvent":
-          stmnt = "Deleted a " + activity.payload.ref_type + " " + activity.payload.ref + " from " + repoURL;
+          stmnt =
+            "Deleted a " +
+            activity.payload.ref_type +
+            " " +
+            activity.payload.ref +
+            " from " +
+            repoURL;
           break;
         case "ForkEvent":
-          stmnt = "Forked a repo " + repoURL +' to '+ '<a href="' + activity.payload.forkee.html_url + '">'+ activity.payload.forkee.full_name +'</a>';
+          stmnt =
+            "Forked a repo " +
+            repoURL +
+            " to " +
+            '<a href="' +
+            activity.payload.forkee.html_url +
+            '">' +
+            activity.payload.forkee.full_name +
+            "</a>";
+          break;
+        case "PullRequestEvent":
+          stmnt =
+            activity.payload.action.charAt(0).toUpperCase() +
+            activity.payload.action.slice(1) +
+            " a " +
+            '<a href="' +
+            this.cleanURL(activity.payload.pull_request.url) +
+            '">' +
+            " pull request " +
+            "</a>" +
+            " in " +
+            repoURL;
+          break;
+        case "PullRequestReviewCommentEvent":
+          stmnt =
+            activity.payload.action.charAt(0).toUpperCase() +
+            activity.payload.action.slice(1) +
+            " a " +
+            '<a href="' +
+            this.cleanURL(activity.payload.comment.html_url) +
+            '">' +
+            " comment " +
+            "</a>" +
+            " on their pull request in " +
+            repoURL
           break;
       }
       return stmnt;
