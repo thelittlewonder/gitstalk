@@ -67,7 +67,7 @@
                 <h2>Latest Activities</h2>
                 <hr>
                 <div class="activities">
-                    <div v-for="activity in activities" :key="activity.id" class="act">
+                    <div v-for="activity in activities" :key="activity.id" class="act" v-if="defineActivity(activity)">
                         <div v-html="defineActivity(activity)" class="entry"></div>
                         <div class="time">{{convertToRelative(activity.created_at)}}</div>
                     </div>
@@ -374,6 +374,7 @@ export default {
           break;
         default:
           console.log(activity.type);
+          return false;
           break;
       }
       return stmnt;
