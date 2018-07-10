@@ -1,27 +1,74 @@
 <template>
   <div>
-    <header>
-      <div class="logo">
-        <img src="../assets/gitstalk.svg">
-      </div>
-      <div class="search">
-        <form @submit.prevent="search()">
-          <label>www.github.com/</label>
-          <input v-model="username">
-          <button type="submit">Search</button>
-        </form>
-      </div>
-    </header>
-    <h1>User Profile</h1>
     <div v-if="loading">
       Loading...
     </div>
-    <div v-if="!showError&&!loading">
-      <div v-for="activity in activities" :key="activity.id">
-         <br>
-        <span v-html="defineActivity(activity)"></span>
-        <br>
-      </div>
+    <div v-if="!showError&&!loading" class="main">
+      <header>
+        <div class="logo">
+          <img src="../assets/gitstalk.svg">
+        </div>
+        <div class="search">
+          <form @submit.prevent="search()">
+            <label>www.github.com/</label>
+            <input v-model="username">
+            <button type="submit">Search</button>
+          </form>
+        </div>
+      </header>
+      <aside>
+        <div class="about">
+          <div class="dp">
+            <img :src="profile.avatar_url">
+          </div>
+          <div class="name">
+            <h1>{{profile.name}}</h1>
+            <a :href="profile.blog">{{profile.blog}}</a>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="item">
+            <h3>Followers</h3>
+            <p>{{profile.followers}}</p>
+          </div>
+          <div class="item">
+            <h3>Following</h3>
+            <p>{{profile.following}}</p>
+          </div>
+          <div class="item">
+            <h3>Stars Received</h3>
+            <p>{{getStars}}</p>
+          </div>
+          <div class="item">
+            <h3>Forks by users</h3>
+            <p>{{getForks}}</p>
+          </div>
+        </div>
+        <div class="lang">
+          {{getLanguages}}
+          <span v-for="lang in languages" :key="lang">
+            {{lang}}
+          </span>
+        </div>
+        <div class="dates">
+          <div class="joined">
+            <h4>Joined</h4>
+            <p>{{joinDate}}</p>
+          </div>
+          <div class="location">
+            <h4>Location</h4>
+            <p>{{profile.location}}</p>
+          </div>
+          <span>Last Updated on {{lastUpdateDate}}</span>
+        </div>
+      </aside>
+      <section>
+        <h2>Latest Activities</h2>
+        <div v-for="activity in activities" :key="activity.id">
+          <span v-html="defineActivity(activity)"></span>
+          <br>
+        </div>
+      </section>
     </div>
     <div v-if="showError">Username does not exists</div>
   </div>
@@ -39,12 +86,14 @@ export default {
       loading: true,
       showError: false,
       activityCount: 15,
-      username: ""
+      username: "",
+      languages: []
     };
   },
   mounted: function() {
     //get username from the route
     let user = this.$route.params.id;
+    this.username = user;
     //make request to github API
     this.makeRequest(user);
   },
@@ -71,7 +120,7 @@ export default {
       this.repos.forEach(repo => {
         languages.push(repo.language);
       });
-      return languages //remove repeating values
+      this.languages = languages //remove repeating values
         .filter(function(elem, index, self) {
           return index == self.indexOf(elem);
         }) //remove null values
@@ -304,4 +353,41 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$master: #5c75f6;
+.main {
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .search {
+      label {
+        color: #333;
+        font-size: 1em;
+        margin-right: 0.5em;
+      }
+      input {
+        background: #ffffff;
+        border: 1px solid #f1f1f1;
+        box-sizing: border-box;
+        font-size: 1em;
+        padding: 0.5em 0.75em;
+      }
+      button {
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .main {
+    header {
+      flex-direction: column;
+      .search {
+        label {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
 </style>
