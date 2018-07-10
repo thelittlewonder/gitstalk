@@ -26,7 +26,7 @@ export default {
       repos: [],
       loading: true,
       showError: false,
-      activityCount: 30
+      activityCount: 100
     };
   },
   mounted: function() {
@@ -235,10 +235,18 @@ export default {
             '<a href="' +
             this.cleanURL(activity.payload.comment.html_url) +
             '">' +
-            " comment " +
+            "comment" +
             "</a>" +
             " on their pull request in " +
             repoURL
+          break;
+        case "IssueCommentEvent":
+          stmnt = activity.payload.action.charAt(0).toUpperCase() + activity.payload.action.slice(1) + " "+
+            '<a href="' +
+            this.cleanURL(activity.payload.issue.html_url) +
+            '">' +
+            "a comment" +
+            "</a>" + " on an issue in " + repoURL;
           break;
       }
       return stmnt;
