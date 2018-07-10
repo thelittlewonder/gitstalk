@@ -3,7 +3,7 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-//const GoogleFontsPlugin = require("google-fonts-webpack-plugin")
+const GoogleFontsPlugin = require("google-fonts-webpack-plugin")
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -16,7 +16,7 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
-  /*plugins: [
+  plugins: [
     new GoogleFontsPlugin({
       fonts: [
         {
@@ -25,7 +25,7 @@ module.exports = {
         }
       ]
     })
-  ],*/
+  ],
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
