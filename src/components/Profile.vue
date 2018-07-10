@@ -1,84 +1,96 @@
 <template>
-  <div class="profile">
+<div class="profile">
     <header>
-      <div class="logo">
-        <img src="../assets/gitstalk.svg">
-      </div>
-      <div class="search">
-        <form @submit.prevent="search()">
-          <label>www.github.com/</label>
-          <input v-model="username">
-          <button type="submit">Search</button>
-        </form>
-      </div>
+        <div class="logo">
+            <router-link to="/">
+                <img src="../assets/gitstalk.svg">
+            </router-link>
+        </div>
+        <div class="search">
+            <form @submit.prevent="search()">
+                <label>www.github.com/</label>
+                <input v-model="username">
+                <button type="submit">Search</button>
+            </form>
+        </div>
     </header>
-    <div v-if="loading">
-      Loading...
-    </div>
-    <div v-if="!showError&&!loading" class="main">
-      <aside>
-        <div class="about">
-          <div class="dp">
-            <img :src="profile.avatar_url">
-          </div>
-          <div class="name">
-            <h1>{{profile.name}}</h1>
-            <a :href="profile.blog">{{getBlog(profile.blog)}}</a>
-          </div>
+    <transition name="fade">
+        <div v-if="loading">
+            Loading...
         </div>
-        <div class="stats">
-          <div class="item">
-            <h3>Followers</h3>
-            <p>{{profile.followers}}</p>
-          </div>
-          <div class="item">
-            <h3>Following</h3>
-            <p>{{profile.following}}</p>
-          </div>
-          <div class="item">
-            <h3>Stars Received</h3>
-            <p>{{getStars}}</p>
-          </div>
-          <div class="item">
-            <h3>Forks by users</h3>
-            <p>{{getForks}}</p>
-          </div>
+    </transition>
+    <transition name="fade">
+        <div v-if="!showError&&!loading" class="main">
+            <aside>
+                <div class="about">
+                    <div class="dp">
+                        <img :src="profile.avatar_url">
+                    </div>
+                    <div class="name">
+                        <h1>{{profile.name}}</h1>
+                        <a :href="profile.blog">{{getBlog(profile.blog)}}</a>
+                    </div>
+                </div>
+                <div class="stats">
+                    <div class="item">
+                        <h3>Followers</h3>
+                        <p>{{profile.followers}}</p>
+                    </div>
+                    <div class="item">
+                        <h3>Following</h3>
+                        <p>{{profile.following}}</p>
+                    </div>
+                    <div class="item">
+                        <h3>Stars Received</h3>
+                        <p>{{getStars}}</p>
+                    </div>
+                    <div class="item">
+                        <h3>Forks by users</h3>
+                        <p>{{getForks}}</p>
+                    </div>
+                </div>
+                <div class="lang">
+                    {{getLanguages}}
+                    <span v-for="lang in languages" :key="lang">
+                        {{lang}}
+                    </span>
+                </div>
+                <div class="dates">
+                    <div class="joined">
+                        <h4>Joined</h4>
+                        <p>{{joinDate}}</p>
+                    </div>
+                    <div class="location">
+                        <h4>Location</h4>
+                        <p>{{profile.location}}</p>
+                    </div>
+                    <span>Last Updated on {{lastUpdateDate}}</span>
+                </div>
+            </aside>
+            <section>
+                <h2>Latest Activities</h2>
+                <hr>
+                <div class="activities">
+                    <div v-for="activity in activities" :key="activity.id" class="act">
+                        <div v-html="defineActivity(activity)" class="entry"></div>
+                        <div class="time">{{convertToRelative(activity.created_at)}}</div>
+                    </div>
+                </div>
+            </section>
         </div>
-        <div class="lang">
-          {{getLanguages}}
-          <span v-for="lang in languages" :key="lang">
-            {{lang}}
-          </span>
-        </div>
-        <div class="dates">
-          <div class="joined">
-            <h4>Joined</h4>
-            <p>{{joinDate}}</p>
-          </div>
-          <div class="location">
-            <h4>Location</h4>
-            <p>{{profile.location}}</p>
-          </div>
-          <span>Last Updated on {{lastUpdateDate}}</span>
-        </div>
-      </aside>
-      <section>
-        <h2>Latest Activities</h2>
-        <hr>
-        <div class="activities">
-          <div v-for="activity in activities" :key="activity.id" class="act">
-            <div v-html="defineActivity(activity)" class="entry"></div>
-            <div class="time">{{convertToRelative(activity.created_at)}}</div>
-          </div>
-        </div>
-      </section>
-    </div>
-    <div v-if="showError">Username does not exists</div>
-  </div>
+    </transition>
+    <transition name="fade">
+        <div v-if="showError&&!loading">error</div>
+    </transition>
+    <transition name="fade">
+        <Foot v-if="!showError&&!loading"></Foot>
+    </transition>
+</div>
 </template>
 
 <script>
 import axios from "axios";
+import Foot from "./Foot.vue";
 export default {
   name: "Profile",
   data() {
@@ -88,10 +100,13 @@ export default {
       repos: [],
       loading: true,
       showError: false,
-      activityCount: 15,
+      activityCount: 20,
       username: "",
       languages: []
     };
+  },
+  components: {
+    Foot
   },
   mounted: function() {
     //get username from the route
@@ -375,7 +390,7 @@ header {
     label {
       color: #333;
       font-size: 1em;
-      margin-right: 0.5em;
+      margin-right: 0.3em;
     }
     input {
       background: #ffffff;
@@ -568,7 +583,7 @@ header {
 }
 
 @media screen and (max-width: 767px) {
-  .main{
+  .main {
     display: flex;
     flex-direction: column-reverse;
   }
@@ -589,7 +604,7 @@ header {
         label {
           display: none;
         }
-        button{
+        button {
           margin-left: 0.5em;
         }
       }
