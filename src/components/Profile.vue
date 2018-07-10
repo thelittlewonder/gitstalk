@@ -26,7 +26,7 @@ export default {
       repos: [],
       loading: true,
       showError: false,
-      activityCount: 100
+      activityCount: 15
     };
   },
   mounted: function() {
@@ -238,15 +238,36 @@ export default {
             "comment" +
             "</a>" +
             " on their pull request in " +
-            repoURL
+            repoURL;
+          break;
+        case "IssuesEvent":
+          stmnt =
+            activity.payload.action.charAt(0).toUpperCase() +
+            activity.payload.action.slice(1) +
+            " a " +
+            '<a href="' +
+            activity.payload.issue.html_url +
+            '">' +
+            " issue " +
+            "</a>" +
+            " in " +
+            repoURL;
           break;
         case "IssueCommentEvent":
-          stmnt = activity.payload.action.charAt(0).toUpperCase() + activity.payload.action.slice(1) + " "+
+          stmnt =
+            activity.payload.action.charAt(0).toUpperCase() +
+            activity.payload.action.slice(1) +
+            " " +
             '<a href="' +
             this.cleanURL(activity.payload.issue.html_url) +
             '">' +
             "a comment" +
-            "</a>" + " on an issue in " + repoURL;
+            "</a>" +
+            " on an issue in " +
+            repoURL;
+          break;
+        default:
+          console.log(activity.type);
           break;
       }
       return stmnt;
