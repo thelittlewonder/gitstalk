@@ -37,6 +37,10 @@ a {
   text-decoration: none;
   @extend .expand;
 }
+.icon {
+  vertical-align: text-top;
+  margin-right: 0.6em;
+}
 .expand {
   position: relative;
   text-decoration: none;
