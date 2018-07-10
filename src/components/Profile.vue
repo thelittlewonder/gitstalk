@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile">
     <header>
       <div class="logo">
         <img src="../assets/gitstalk.svg">
@@ -23,7 +23,7 @@
           </div>
           <div class="name">
             <h1>{{profile.name}}</h1>
-            <a :href="profile.blog">{{profile.blog}}</a>
+            <a :href="profile.blog">{{getBlog(profile.blog)}}</a>
           </div>
         </div>
         <div class="stats">
@@ -199,6 +199,14 @@ export default {
         hour: "2-digit",
         minute: "2-digit"
       });
+    },
+    //clean up blog text
+    getBlog: function(a) {
+      let remove = ["https://wwww.", "http://www.", "http://", "https://"];
+      remove.forEach(x => {
+        a.includes(x) ? (a = a.replace(x, "")) : "";
+      });
+      return a;
     },
     //changes url from api.github.com to standard form
     cleanURL: function(u) {
@@ -497,7 +505,7 @@ header {
         font-size: 0.875em;
         letter-spacing: 0.01em;
         color: #555555;
-        margin-top: 0.45em;
+        margin-top: 0.5em;
       }
       .joined {
         margin-bottom: 1em;
@@ -537,8 +545,6 @@ header {
       padding: 0 1.5em 1.5em 1.5em;
       .act {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
         padding: 0.75em 0;
         border-bottom: 1px solid #f7f7f7;
         &:last-child {
@@ -548,11 +554,13 @@ header {
           font-size: 1em;
           letter-spacing: 0.01em;
           color: #666666;
+          margin-right: 0.5em;
         }
         .time {
           font-size: 1em;
           letter-spacing: 0.01em;
           color: #cccccc;
+          margin-left: 0.5em;
         }
       }
     }
@@ -560,12 +568,63 @@ header {
 }
 
 @media screen and (max-width: 767px) {
+  .main{
+    display: flex;
+    flex-direction: column-reverse;
+  }
   header {
     flex-direction: column;
     justify-content: center;
+    margin-top: 1.5em;
     .search {
       label {
         margin-right: 0;
+      }
+      form {
+        margin-top: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        label {
+          display: none;
+        }
+        button{
+          margin-left: 0.5em;
+        }
+      }
+    }
+  }
+  section {
+    .act {
+      flex-direction: column;
+      .time {
+        margin: 0.25em 0 0 0;
+        margin-left: 0 !important;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .profile {
+    padding: 2em;
+    max-width: 960px;
+    margin: 0 auto;
+    .main {
+      display: flex;
+      flex-direction: row;
+      aside {
+        margin-right: 2%;
+        width: 26%;
+        min-width: 240px;
+      }
+      section {
+        width: 72%;
+        .act {
+          flex-direction: row;
+          justify-content: space-between;
+        }
       }
     }
   }
