@@ -1,21 +1,21 @@
 <template>
   <div>
+    <header>
+      <div class="logo">
+        <img src="../assets/gitstalk.svg">
+      </div>
+      <div class="search">
+        <form @submit.prevent="search()">
+          <label>www.github.com/</label>
+          <input v-model="username">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </header>
     <div v-if="loading">
       Loading...
     </div>
     <div v-if="!showError&&!loading" class="main">
-      <header>
-        <div class="logo">
-          <img src="../assets/gitstalk.svg">
-        </div>
-        <div class="search">
-          <form @submit.prevent="search()">
-            <label>www.github.com/</label>
-            <input v-model="username">
-            <button type="submit">Search</button>
-          </form>
-        </div>
-      </header>
       <aside>
         <div class="about">
           <div class="dp">
@@ -64,9 +64,12 @@
       </aside>
       <section>
         <h2>Latest Activities</h2>
-        <div v-for="activity in activities" :key="activity.id">
-          <span v-html="defineActivity(activity)"></span>
-          <br>
+        <hr>
+        <div class="activities">
+          <div v-for="activity in activities" :key="activity.id" class="act">
+            <div v-html="defineActivity(activity)" class="entry"></div>
+            <div class="time">{{convertToRelative(activity.created_at)}}</div>
+          </div>
         </div>
       </section>
     </div>
@@ -353,39 +356,216 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$master: #5c75f6;
+$main: #5c75f6;
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+  .search {
+    label {
+      color: #333;
+      font-size: 1em;
+      margin-right: 0.5em;
+    }
+    input {
+      background: #ffffff;
+      border: 1px solid #f1f1f1;
+      box-sizing: border-box;
+      font-size: 1em;
+      padding: 0.5em 0.75em;
+      &:focus {
+        outline: 1px solid $main;
+      }
+    }
+    button {
+      padding: 0.5em 1.25em;
+      cursor: pointer;
+      background-color: $main;
+      font-size: 1em;
+      border-radius: 2px;
+      color: #fff;
+      font-family: "Rubik";
+      border: none;
+      letter-spacing: 0.01em;
+    }
+  }
+}
 .main {
-  header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    .search {
-      label {
-        color: #333;
-        font-size: 1em;
+  aside {
+    .about {
+      background: #ffffff;
+      border: 1px solid #f7f7f7;
+      box-sizing: border-box;
+      border-radius: 2px 2px 0px 0px;
+      padding: 1em;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .dp {
+        img {
+          height: 44px;
+          width: auto;
+          border-radius: 100%;
+        }
+        margin-right: 0.75em;
+      }
+      .name {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        h1 {
+          color: #333;
+          font-size: 1em;
+          margin-bottom: 0.375em;
+        }
+        a {
+          color: $main;
+          text-decoration: none;
+          font-size: 0.875em;
+        }
+      }
+    }
+    .stats {
+      background: #ffffff;
+      border-right: 1px solid #f7f7f7;
+      border-bottom: 1px solid #f7f7f7;
+      border-left: 1px solid #f7f7f7;
+      box-sizing: border-box;
+      border-radius: 2px 2px 0px 0px;
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+      .item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 1em;
+        &:last-child {
+          margin-bottom: 0;
+        }
+        h3 {
+          font-size: 0.875em;
+          letter-spacing: 0.01em;
+          color: #888888;
+        }
+        p {
+          font-size: 1em;
+          letter-spacing: 0.01em;
+          color: #555555;
+        }
+      }
+    }
+    .lang {
+      background: #ffffff;
+      border-right: 1px solid #f7f7f7;
+      border-bottom: 1px solid #f7f7f7;
+      border-left: 1px solid #f7f7f7;
+      box-sizing: border-box;
+      border-radius: 2px 2px 0px 0px;
+      padding: 0.5em;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      span {
+        margin: 0.5em;
+        text-align: center;
+        font-size: 0.75em;
+        letter-spacing: 0.01em;
+        color: $main;
+        padding: 0.5em;
+        background-color: rgba($main, 0.05);
+        border-radius: 1px;
         margin-right: 0.5em;
       }
-      input {
-        background: #ffffff;
-        border: 1px solid #f1f1f1;
-        box-sizing: border-box;
-        font-size: 1em;
-        padding: 0.5em 0.75em;
+    }
+    .dates {
+      background: #ffffff;
+      border-right: 1px solid #f7f7f7;
+      border-bottom: 1px solid #f7f7f7;
+      border-left: 1px solid #f7f7f7;
+      box-sizing: border-box;
+      border-radius: 2px 2px 0px 0px;
+      padding: 1em;
+      h4 {
+        font-size: 0.75em;
+        letter-spacing: 0.01em;
+        color: #888888;
       }
-      button {
+      p {
+        font-size: 0.875em;
+        letter-spacing: 0.01em;
+        color: #555555;
+        margin-top: 0.45em;
+      }
+      .joined {
+        margin-bottom: 1em;
+      }
+      .location {
+        margin-bottom: 0.875em;
+        p {
+          color: $main;
+        }
+      }
+      span {
+        font-size: 0.875em;
+        text-align: right;
+        letter-spacing: 0.01em;
+        color: #aaa;
+      }
+    }
+  }
+  section {
+    background: #ffffff;
+    border: 1px solid #f7f7f7;
+    box-sizing: border-box;
+    border-radius: 2px;
+    h2 {
+      font-size: 18px;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: #333333;
+      padding: 1.5em 1.5em 0 1.5em;
+    }
+    hr {
+      margin: 0.75em 0;
+      height: 0;
+      border: 1px solid #f7f7f7;
+    }
+    .activities {
+      padding: 0 1.5em 1.5em 1.5em;
+      .act {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0.75em 0;
+        border-bottom: 1px solid #f7f7f7;
+        &:last-child {
+          border-bottom: none;
+        }
+        .entry {
+          font-size: 1em;
+          letter-spacing: 0.01em;
+          color: #666666;
+        }
+        .time {
+          font-size: 1em;
+          letter-spacing: 0.01em;
+          color: #cccccc;
+        }
       }
     }
   }
 }
 
 @media screen and (max-width: 767px) {
-  .main {
-    header {
-      flex-direction: column;
-      .search {
-        label {
-          margin-right: 0;
-        }
+  header {
+    flex-direction: column;
+    justify-content: center;
+    .search {
+      label {
+        margin-right: 0;
       }
     }
   }
