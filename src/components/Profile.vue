@@ -1,5 +1,17 @@
 <template>
   <div>
+    <header>
+      <div class="logo">
+        <img src="../assets/gitstalk.svg">
+      </div>
+      <div class="search">
+        <form @submit.prevent="search()">
+          <label>www.github.com/</label>
+          <input v-model="username">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </header>
     <h1>User Profile</h1>
     <div v-if="loading">
       Loading...
@@ -26,42 +38,15 @@ export default {
       repos: [],
       loading: true,
       showError: false,
-      activityCount: 15
+      activityCount: 15,
+      username: ""
     };
   },
   mounted: function() {
     //get username from the route
     let user = this.$route.params.id;
     //make request to github API
-    axios
-      .all([
-        axios.get("https://api.github.com/users/" + user),
-        axios.get(
-          "https://api.github.com/users/" +
-            user +
-            "/events?per_page=" +
-            this.activityCount
-        ),
-        axios.get(
-          "https://api.github.com/users/" + user + "/repos?per_page=100"
-        )
-      ])
-      .then(
-        axios.spread((profile, activity, repo) => {
-          //hide loader
-          this.loading = false;
-
-          //set data
-          this.profile = profile.data;
-          this.activities = activity.data;
-          this.repos = repo.data;
-        })
-      )
-      .catch(err => {
-        this.loading = false;
-        console.log(err);
-        this.showError = true;
-      });
+    this.makeRequest(user);
   },
   computed: {
     //get total stars
@@ -106,6 +91,48 @@ export default {
     }
   },
   methods: {
+    makeRequest: function(name) {
+      //make request to github API
+      this.loading = true;
+      axios
+        .all([
+          axios.get("https://api.github.com/users/" + name),
+          axios.get(
+            "https://api.github.com/users/" +
+              name +
+              "/events?per_page=" +
+              this.activityCount
+          ),
+          axios.get(
+            "https://api.github.com/users/" + name + "/repos?per_page=100"
+          )
+        ])
+        .then(
+          axios.spread((profile, activity, repo) => {
+            //hide loader
+            this.loading = false;
+
+            //set data
+            this.profile = profile.data;
+            this.activities = activity.data;
+            this.repos = repo.data;
+          })
+        )
+        .catch(err => {
+          this.loading = false;
+          console.log(err);
+          this.showError = true;
+        });
+    },
+    search: function() {
+      let user = this.username;
+      if (user) {
+        this.$router.push("/" + user);
+        this.makeRequest(user);
+      } else {
+        this.showError = true;
+      }
+    },
     //convert a date string to DD MM, YYYY Format
     beautifyDate: function(s) {
       return new Date(s).toLocaleDateString([], {
