@@ -16,7 +16,6 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
-  historyApiFallback: true,
   plugins: [
     new GoogleFontsPlugin({
       fonts: [{
