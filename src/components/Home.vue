@@ -45,7 +45,7 @@ export default {
     search: function() {
       let user = this.username;
       if (user) {
-        this.$router.push("/" + user);
+        this.$router.replace("/" + user);
       } else {
         this.showError = true;
       }

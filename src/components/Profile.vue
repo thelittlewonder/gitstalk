@@ -120,6 +120,7 @@ export default {
     this.makeRequest(user);
     //fix back button on mobile
     window.onpopstate = event => {
+      console.log('back');
       this.$router.push("/");
     };
   },
