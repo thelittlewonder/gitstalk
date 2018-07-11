@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="https://i.imgur.com/4TLcgCS.png" alt="gitstalk">
-</p>
+![Gitstalk](https://i.imgur.com/4TLcgCS.png)
 
 ### Discover who's upto what on Github
 Check it out at http://gitstalk.herokuapp.com
