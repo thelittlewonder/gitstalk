@@ -412,7 +412,7 @@ export default {
             activity.payload.action.slice(1) +
             " " +
             '<a href="' +
-            this.cleanURL(activity.payload.issue.html_url) +
+            this.cleanURL(activity.payload.comment.html_url) +
             '">' +
             "a comment" +
             "</a>" +
