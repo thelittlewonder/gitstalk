@@ -165,6 +165,7 @@ export default {
     makeRequest: function(name) {
       //make request to github API
       this.loading = true;
+      this.showError = false;
       axios
         .all([
           axios.get("https://api.github.com/users/" + name),
