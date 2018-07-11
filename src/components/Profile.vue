@@ -118,6 +118,10 @@ export default {
     this.username = user;
     //make request to github API
     this.makeRequest(user);
+    //fix back button on mobile
+    window.onpopstate = event => {
+      this.$router.push("/");
+    };
   },
   computed: {
     //get total stars
