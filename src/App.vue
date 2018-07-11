@@ -12,7 +12,6 @@ export default {
   name: "App",
   metaInfo: {
     title: "Gitstalk",
-    titleTemplate: "%s - Gitstalk",
     meta: [
       {
         name: "keywords",
