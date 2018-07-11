@@ -38,55 +38,6 @@ export default {
       ]
     };
   },
-  metaInfo: {
-    title: "Gitstalk",
-    titleTemplate: "%s - Gitstalk",
-    meta: [
-      {
-        name: "keywords",
-        content:
-          "github, github analyser, gitstalk, git stalk, github analysis, github stats"
-      },
-      {
-        name: "description",
-        content:
-          "Discover who's upto what on Github. Web-App to analyse Github users activity"
-      },
-      { name: "subject", content: "Discover who's upto what on Github" },
-      { name: "author", content: "@thelittlewonder" },
-      { name: "url", content: "http://gitstalk.herokuapp.com" },
-      { name: "og:title", content: "Gitstalk" },
-      { name: "og:site_name", content: "Gitstalk" },
-      { name: "og:type", content: "website" },
-      { name: "og:url", content: "http://gitstalk.herokuapp.com" },
-      {
-        name: "og:description",
-        content:
-          "Discover who's upto what on Github. Web-App to analyse Github users activity"
-      },
-      {
-        name: "twitter:card",
-        content:
-          "Discover who's upto what on Github. Web-App to analyse Github users activity"
-      },
-      {
-        name: "twitter:site",
-        content: "http://gitstalk.herokuapp.com"
-      },
-      { name: "twitter:title", content: "Gitstalk" },
-      {
-        name: "twitter:description",
-        content: "Discover who's upto what on Github"
-      },
-      { name: "twitter:creator", content: "@thelittlewonder" },
-      { itemprop: "name", content: "Gitstalk" },
-      {
-        itemprop: "description",
-        content:
-          "Discover who's upto what on Github. Web-App to analyse Github users activity"
-      }
-    ]
-  },
   components: {
     Foot
   },
