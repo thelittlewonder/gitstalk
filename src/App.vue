@@ -58,7 +58,8 @@ export default {
           "Discover who's upto what on Github. Web-App to analyse Github users activity"
       },
       {
-        name="theme-color", content="#5c75f6"
+        name: "theme-color",
+        content: "#5c75f6"
       }
     ]
   }
