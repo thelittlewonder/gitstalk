@@ -638,6 +638,7 @@ header {
         .entry {
           font-size: 1em;
           letter-spacing: 0.01em;
+          line-height: 1.5em;
           color: #666666;
           margin-right: 0.5em;
         }

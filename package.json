@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "node server.js",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "deploy": "bash deploy.sh"
   },
   "dependencies": {
     "axios": "^0.18.0",
