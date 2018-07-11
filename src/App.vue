@@ -28,7 +28,7 @@ export default {
 .fade-leave-active {
   opacity: 0;
 }
-html {
+#app {
   font-family: "Rubik";
   background-color: #fdfdfd;
 }
