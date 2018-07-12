@@ -395,7 +395,7 @@ export default {
           stmnt +=
             activity.payload.action.charAt(0).toUpperCase() +
             activity.payload.action.slice(1) +
-            " a " +
+            " an " +
             '<a href="' +
             activity.payload.issue.html_url +
             '">' +
