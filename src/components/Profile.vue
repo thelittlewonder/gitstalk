@@ -651,6 +651,7 @@ header {
           letter-spacing: 0.01em;
           color: #cccccc;
           margin-left: 0.5em;
+          line-height: 1.5em;
         }
       }
     }
@@ -707,18 +708,18 @@ header {
 @media screen and (min-width: 768px) {
   .profile {
     padding: 2em;
-    max-width: 960px;
+    max-width: 980px;
     margin: 0 auto;
     .main {
       display: flex;
       flex-direction: row;
       aside {
         margin-right: 2%;
-        width: 26%;
+        width: 28%;
         min-width: 240px;
       }
       section {
-        width: 72%;
+        width: 70%;
         .act {
           flex-direction: row;
           justify-content: space-between;
