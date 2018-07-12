@@ -120,7 +120,6 @@ export default {
     this.makeRequest(user);
     //fix back button on mobile
     window.onpopstate = event => {
-      console.log('back');
       this.$router.push("/");
     };
   },
@@ -227,7 +226,7 @@ export default {
     },
     //clean up blog text
     getBlog: function(a) {
-      let remove = ["https://wwww.", "http://www.", "http://", "https://"];
+      let remove = ["https://www.", "http://www.", "http://", "https://"];
       remove.forEach(x => {
         a.includes(x) ? (a = a.replace(x, "")) : "";
       });
@@ -366,7 +365,7 @@ export default {
             activity.payload.action.slice(1) +
             " a " +
             '<a href="' +
-            this.cleanURL(activity.payload.pull_request.url) +
+            this.activity.payload.pull_request.html_url +
             '">' +
             " pull request " +
             "</a>" +
@@ -380,7 +379,7 @@ export default {
             activity.payload.action.slice(1) +
             " a " +
             '<a href="' +
-            this.cleanURL(activity.payload.comment.html_url) +
+            this.activity.payload.comment.html_url +
             '">' +
             "comment" +
             "</a>" +
@@ -412,7 +411,7 @@ export default {
             activity.payload.action.slice(1) +
             " " +
             '<a href="' +
-            this.cleanURL(activity.payload.comment.html_url) +
+            this.activity.payload.comment.html_url +
             '">' +
             "a comment" +
             "</a>" +
