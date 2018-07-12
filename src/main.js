@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Meta from 'vue-meta'
+import VueAnalytics from 'vue-analytics'
 
 Vue.use(Meta)
 
@@ -13,6 +14,13 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {
+    App
+  },
   template: '<App/>'
+})
+
+Vue.use(VueAnalytics, {
+  id: 'UA-122222796-1',
+  router
 })
