@@ -365,7 +365,7 @@ export default {
             activity.payload.action.slice(1) +
             " a " +
             '<a href="' +
-            this.activity.payload.pull_request.html_url +
+            activity.payload.pull_request.html_url +
             '">' +
             " pull request " +
             "</a>" +
@@ -379,7 +379,7 @@ export default {
             activity.payload.action.slice(1) +
             " a " +
             '<a href="' +
-            this.activity.payload.comment.html_url +
+            activity.payload.comment.html_url +
             '">' +
             "comment" +
             "</a>" +
@@ -411,7 +411,7 @@ export default {
             activity.payload.action.slice(1) +
             " " +
             '<a href="' +
-            this.activity.payload.comment.html_url +
+            activity.payload.comment.html_url +
             '">' +
             "a comment" +
             "</a>" +
