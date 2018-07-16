@@ -512,6 +512,9 @@ header {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         h1 {
           color: #333;
           font-size: 1em;
