@@ -24,7 +24,7 @@
                     </div>
                     <div class="name">
                         <h1>{{profile.name}}</h1>
-                        <a :href="profile.blog">{{getBlog(profile.blog)}}</a>
+                        <a @click.prevent="goToBlog(profile.blog)" :href="profile.blog">{{getBlog(profile.blog)}}</a>
                     </div>
                 </div>
                 <div class="stats">
@@ -231,6 +231,12 @@ export default {
         a.includes(x) ? (a = a.replace(x, "")) : "";
       });
       return a;
+    },
+    // manually navigate to the blog
+    goToBlog: function(url) {
+      url.match(/https/) ? 
+        window.location.href = url : 
+        window.location.href = "http://www." + url;
     },
     //changes url from api.github.com to standard form
     cleanURL: function(u) {
