@@ -192,6 +192,11 @@ export default {
             this.profile = profile.data;
             this.activities = activity.data;
             this.repos = repo.data;
+
+            //append http if not
+            if (!/^https?:\/\//i.test(this.profile.blog)) {
+              this.profile.blog = "http://" + this.profile.blog;
+            }
           })
         )
         .catch(err => {
