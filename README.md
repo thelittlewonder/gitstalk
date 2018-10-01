@@ -3,6 +3,8 @@
 ### Discover who's upto what on Github
 Check it out at https://gitstalk.netlify.com/
 
+**Don't forget to upvote on [Product Hunt](https://www.producthunt.com/posts/gitstalk)**
+
 ## Local Setup
 
 ``` bash
