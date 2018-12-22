@@ -22,10 +22,21 @@
                     <div class="dp">
                         <img :src="profile.avatar_url">
                     </div>
-                    <div class="name">
-                        <h1>{{profile.name}}</h1>
-                        <a :href="profile.blog">{{getBlog(profile.blog)}}</a>
-                    </div>
+                    <ul class="name">
+                        <li>
+                            <h1>{{profile.name}}</h1>
+                        </li>
+                        <li>
+                            <a :href="profile.html_url">
+                              {{`@${profile.login}`}}
+                            </a>
+                        </li>
+                        <li>
+                            <a :href="profile.blog">
+                              {{getBlog(profile.blog)}}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="stats">
                     <div class="item">
