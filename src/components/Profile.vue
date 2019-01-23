@@ -655,6 +655,7 @@ header {
           margin-right: 0.5em;
         }
         .time {
+          flex-shrink: 0;
           font-size: 1em;
           letter-spacing: 0.01em;
           color: #cccccc;
