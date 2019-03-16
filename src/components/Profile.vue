@@ -8,7 +8,7 @@
         </div>
         <div class="search">
             <form @submit.prevent="search()">
-                <label>www.github.com/</label>
+                <label>github.com/</label>
                 <input v-model="username">
                 <button type="submit">Search</button>
             </form>
