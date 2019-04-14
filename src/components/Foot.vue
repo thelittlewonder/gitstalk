@@ -1,7 +1,7 @@
 <template>
     <footer>
       <p>Stalking? I call it Social Research</p>
-      <a href="http://www.github.com/littlewonder/gitstalk">✏️ littlewonder/gitstalk</a>
+      <a href="http://www.github.com/thelittlewonder/gitstalk">✏️ thelittlewonder/gitstalk</a>
     </footer>
 </template>
 
