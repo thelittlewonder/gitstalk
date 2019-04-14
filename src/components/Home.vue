@@ -24,7 +24,7 @@ export default {
       username: "",
       showError: false,
       randomUsers: [
-        "littlewonder",
+        "thelittlewonder",
         "tj",
         "hackerkid",
         "phobal",
