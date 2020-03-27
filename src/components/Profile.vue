@@ -23,7 +23,7 @@
                         <img :src="profile.avatar_url">
                     </div>
                     <div class="name">
-                        <h1>{{profile.name}}</h1>
+                        <h1>{{profile.name}} <a :href="profile.html_url" target="_blank">↗</a></h1>
                         <a :href="profile.blog">{{getBlog(profile.blog)}}</a>
                     </div>
                 </div>
