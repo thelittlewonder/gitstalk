@@ -677,6 +677,7 @@ header {
           margin-left: 0.5em;
           line-height: 1.5em;
           text-align: right;
+          flex-shrink: 0;
         }
       }
     }
