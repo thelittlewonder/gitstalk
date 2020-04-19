@@ -1,95 +1,101 @@
 <template>
-<div class="profile">
+  <div class="profile">
     <header>
-        <div class="logo">
-            <router-link to="/">
-                <img src="../assets/gitstalk.svg">
-            </router-link>
-        </div>
-        <div class="search">
-            <form @submit.prevent="search()">
-                <label>www.github.com/</label>
-                <input v-model="username">
-                <button type="submit">Search</button>
-            </form>
-        </div>
+      <div class="logo">
+        <router-link to="/">
+          <img src="../assets/gitstalk.svg" />
+        </router-link>
+      </div>
+      <div class="search">
+        <form @submit.prevent="search()">
+          <label>www.github.com/</label>
+          <input v-model="username" />
+          <button type="submit">Search</button>
+        </form>
+      </div>
     </header>
-        <div class="spinner" v-if="loading"></div>
+    <div class="spinner" v-if="loading"></div>
     <transition name="fade">
-        <div v-if="!showError&&!loading" class="main">
-            <aside>
-                <div class="about">
-                    <div class="dp">
-                        <img :src="profile.avatar_url">
-                    </div>
-                    <div class="name">
-                        <h1>{{profile.name}}</h1>
-                        <a :href="profile.blog">{{getBlog(profile.blog)}}</a>
-                    </div>
-                </div>
-                <div class="stats">
-                    <div class="item">
-                        <h3>Followers</h3>
-                        <p>{{profile.followers}}</p>
-                    </div>
-                    <div class="item">
-                        <h3>Following</h3>
-                        <p>{{profile.following}}</p>
-                    </div>
-                    <div class="item">
-                        <h3>Stars Received</h3>
-                        <p>{{getStars}}</p>
-                    </div>
-                    <div class="item">
-                        <h3>Forks by users</h3>
-                        <p>{{getForks}}</p>
-                    </div>
-                </div>
-                <div class="lang">
-                    {{getLanguages}}
-                    <span v-for="lang in languages" :key="lang">
-                        {{lang}}
-                    </span>
-                </div>
-                <div class="dates">
-                    <div class="joined">
-                        <h4>Joined</h4>
-                        <p>{{joinDate}}</p>
-                    </div>
-                    <div class="location">
-                        <h4>Location</h4>
-                        <p>{{profile.location}}</p>
-                    </div>
-                    <span>Last Updated on {{lastUpdateDate}}</span>
-                </div>
-            </aside>
-            <section>
-                <h2>Latest Activities</h2>
-                <hr>
-                <div class="activities">
-                    <div v-for="activity in activities" :key="activity.id" class="act" v-if="defineActivity(activity)">
-                        <div v-html="defineActivity(activity)" class="entry"></div>
-                        <div class="time">{{convertToRelative(activity.created_at)}}</div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </transition>
-    <transition name="fade">
-        <div v-if="showError&&!loading" class="error">
-          <div class="octocat">
-            <img src="../assets/errorCat.png">
+      <div v-if="!showError&&!loading" class="main">
+        <aside>
+          <div class="about">
+            <div class="dp">
+              <img :src="profile.avatar_url" />
+            </div>
+            <div class="name">
+              <h1>
+                {{profile.name}}
+                <a :href="profile.html_url" target="_blank">↗</a>
+              </h1>
+              <a :href="profile.blog">{{getBlog(profile.blog)}}</a>
+            </div>
           </div>
-          <div class="message">
-            <h2>Username not found.</h2>
-            <h3>Even our strongest octocat failed to find it.</h3>
+          <div class="stats">
+            <div class="item">
+              <h3>Followers</h3>
+              <p>{{profile.followers}}</p>
+            </div>
+            <div class="item">
+              <h3>Following</h3>
+              <p>{{profile.following}}</p>
+            </div>
+            <div class="item">
+              <h3>Stars Received</h3>
+              <p>{{getStars}}</p>
+            </div>
+            <div class="item">
+              <h3>Forks by users</h3>
+              <p>{{getForks}}</p>
+            </div>
           </div>
-        </div>
+          <div class="lang">
+            {{getLanguages}}
+            <span v-for="lang in languages" :key="lang">{{lang}}</span>
+          </div>
+          <div class="dates">
+            <div class="joined">
+              <h4>Joined</h4>
+              <p>{{joinDate}}</p>
+            </div>
+            <div class="location">
+              <h4>Location</h4>
+              <p>{{profile.location}}</p>
+            </div>
+            <span>Last Updated on {{lastUpdateDate}}</span>
+          </div>
+        </aside>
+        <section>
+          <h2>Latest Activities</h2>
+          <hr />
+          <div class="activities">
+            <div
+              v-for="activity in activities"
+              :key="activity.id"
+              class="act"
+              v-if="defineActivity(activity)"
+            >
+              <div v-html="defineActivity(activity)" class="entry"></div>
+              <div class="time">{{convertToRelative(activity.created_at)}}</div>
+            </div>
+          </div>
+        </section>
+      </div>
     </transition>
     <transition name="fade">
-        <Foot v-if="!showError&&!loading"></Foot>
+      <div v-if="showError&&!loading" class="error">
+        <div class="octocat">
+          <img src="../assets/errorCat.png" />
+        </div>
+        <div class="message">
+          <h2>Username not found.</h2>
+          <h3>Even our strongest octocat failed to find it.</h3>
+        </div>
+      </div>
     </transition>
-</div>
+    <transition name="fade">
+      <Foot v-if="!showError&&!loading"></Foot>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -258,9 +264,19 @@ export default {
       } else if (elapsed < msPerHour) {
         return Math.round(elapsed / msPerMinute) + " minutes ago";
       } else if (elapsed < msPerDay) {
-        return Math.round(elapsed / msPerHour) + " hours ago";
+        let hours = Math.round(elapsed / msPerHour);
+        if (hours == 1) {
+          return hours + " hour ago";
+        } else {
+          return hours + " hours ago";
+        }
       } else if (elapsed < msPerMonth && Math.round(elapsed / msPerDay) <= 2) {
-        return Math.round(elapsed / msPerDay) + " days ago";
+        let days = Math.round(elapsed / msPerDay);
+        if (days == 1) {
+          return days + " day ago";
+        } else {
+          return days + " days ago";
+        }
       } else {
         //dont convert if older than 2 days
         return previous.toLocaleDateString([], {
@@ -660,6 +676,7 @@ header {
           color: #cccccc;
           margin-left: 0.5em;
           line-height: 1.5em;
+          text-align: right;
         }
       }
     }
