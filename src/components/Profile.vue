@@ -319,6 +319,8 @@ export default {
             commit += "s";
           }
           //if event is pushed
+          // ref starts with "refs/heads/"
+          let branchRef = activity.payload.ref.slice(11)
           stmnt =
             createIcon +
             "Pushed " +
@@ -326,6 +328,14 @@ export default {
             " " +
             commit +
             " to " +
+            '<a href="' +
+            this.cleanURL(activity.repo.url) +
+            "/tree/" +
+            branchRef +
+            '">' +
+            branchRef +
+            "</a>" +
+            " in " +
             repoURL;
           break;
         case "WatchEvent":
