@@ -74,7 +74,10 @@
               class="act"
               v-if="defineActivity(activity)"
             >
-              <div v-html="defineActivity(activity)" class="entry"></div>
+              <div class="tooltip">
+                <span class="tooltiptext" v-if="defineTooltip(activity)">{{defineTooltip(activity)}}</span>
+                <div v-html="defineActivity(activity)" class="entry"></div>
+              </div>
               <div class="time">{{convertToRelative(activity.created_at)}}</div>
             </div>
           </div>
@@ -455,6 +458,27 @@ export default {
           break;
       }
       return stmnt;
+    },
+    defineTooltip: function(activity) {
+      switch (activity.type) {
+        case "PullRequestEvent":
+        case "PullRequestReviewCommentEvent":
+          return "#" +
+            activity.payload.pull_request.number +
+            " " +
+            activity.payload.pull_request.title;
+          break;
+        case "IssuesEvent":
+        case "IssueCommentEvent":
+          return "#" +
+            activity.payload.issue.number +
+            " " +
+            activity.payload.issue.title;
+          break;
+        default:
+          return false;
+          break;
+      }
     }
   }
 };
@@ -688,6 +712,25 @@ header {
           line-height: 1.5em;
           text-align: right;
           flex-shrink: 0;
+        }
+        .tooltip {
+          position: relative;
+          display: inline-block;
+        }
+        .tooltip span.tooltiptext {
+          visibility: hidden;
+          background-color: #cccccc;
+          text-align: center;
+          border-radius: 0 2px 2px 0;
+          padding: 5px;
+          /* Position the tooltip */
+          bottom: 100%;
+          margin-left: 40px;
+          position: absolute;
+          z-index: 1;
+        }
+        .tooltip:hover span.tooltiptext {
+          visibility: visible;
         }
       }
     }
