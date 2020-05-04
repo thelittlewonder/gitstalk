@@ -114,7 +114,7 @@ export default {
       activityCount: 20,
       username: "",
       languages: [],
-      dark: true
+      dark: ""
     };
   },
   components: {
@@ -130,6 +130,14 @@ export default {
     window.onpopstate = event => {
       this.$router.push("/");
     };
+
+    //set theme
+    let temp = document.getElementById("app").className;
+    if (temp == "light-theme") {
+      this.dark = false;
+    } else {
+      this.dark = true;
+    }
   },
   computed: {
     //get total stars
@@ -452,16 +460,15 @@ export default {
             repoURL;
           break;
         default:
-          console.log(activity.type);
           return false;
           break;
       }
       return stmnt;
     },
     themeToggle: function() {
-      let vm = this
+      let vm = this;
       if (vm.dark) {
-        vm.dark = false
+        vm.dark = false;
         document.body.style.backgroundColor = "#fdfdfd";
         document.getElementById("app").className = "light-theme";
         //favicon
@@ -470,7 +477,7 @@ export default {
         document.querySelector("link[rel*='icon']").href =
           "./static/favicon-light.png";
       } else {
-        vm.dark = true
+        vm.dark = true;
         document.body.style.backgroundColor = "#1a1c21";
         document.getElementById("app").className = "dark-theme";
         //favicon
