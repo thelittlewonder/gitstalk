@@ -61,6 +61,21 @@ export default {
         content: "#5c75f6"
       }
     ]
+  },
+  mounted: function() {
+    let today = new Date()
+    if (
+      (window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches) ||  today.getHours() >= 22 || (today.getHours >= 0 && today.getHours() <=5)
+    ) {
+      document.body.style.backgroundColor = "#1a1c21";
+        document.getElementById("app").className = "dark-theme";
+        //favicon
+        document.querySelector("link[rel='shortcut icon']").href =
+          "./static/favicon-dark.png";
+        document.querySelector("link[rel*='icon']").href =
+          "./static/favicon-dark.png";
+    }
   }
 };
 </script>
@@ -72,7 +87,7 @@ export default {
     @import "./css/base-profile";
   }
   .home {
-     @import "./css/base-home";
+    @import "./css/base-home";
   }
 }
 
@@ -82,7 +97,7 @@ export default {
     @import "./css/base-profile";
   }
   .home {
-     @import "./css/base-home";
+    @import "./css/base-home";
   }
 }
 
