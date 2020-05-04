@@ -1,11 +1,11 @@
 <template>
-  <div class="profile" :class="theme=='dark' ? 'dark-theme' : 'light-theme'">
+  <div class="profile" :class="dark ? 'dark-theme' : 'light-theme'">
     <header>
       <div class="logo">
         <router-link to="/">
           <div class="logo-image" />
         </router-link>
-        <div class="darkmode" @click="themeToggle()"/>
+        <div class="darkmode" @click="themeToggle()" />
       </div>
       <div class="search">
         <form @submit.prevent="search()">
@@ -85,7 +85,7 @@
     <transition name="fade">
       <div v-if="showError&&!loading" class="error">
         <div class="octocat">
-          <img class="error-state"/>
+          <img class="error-state" />
         </div>
         <div class="message">
           <h2>Username not found.</h2>
@@ -114,7 +114,7 @@ export default {
       activityCount: 20,
       username: "",
       languages: [],
-      theme: "light"
+      dark: true
     };
   },
   components: {
@@ -459,17 +459,25 @@ export default {
       return stmnt;
     },
     themeToggle: function() {
-      let favicon = document.getElementById('favicon');
-      if (this.theme == "dark") {
-        this.theme = "light";
+      let vm = this
+      if (vm.dark) {
+        vm.dark = false
         document.body.style.backgroundColor = "#fdfdfd";
-        document.getElementById('app').className='light-theme'
-        favicon.setAttribute("href","./src/assets/favicon-light.png")
+        document.getElementById("app").className = "light-theme";
+        //favicon
+        document.querySelector("link[rel='shortcut icon']").href =
+          "./static/favicon-light.png";
+        document.querySelector("link[rel*='icon']").href =
+          "./static/favicon-light.png";
       } else {
-        this.theme = "dark";
+        vm.dark = true
         document.body.style.backgroundColor = "#1a1c21";
-        document.getElementById('app').className='dark-theme'
-        favicon.setAttribute("href","./src/assets/favicon-dark.png")
+        document.getElementById("app").className = "dark-theme";
+        //favicon
+        document.querySelector("link[rel='shortcut icon']").href =
+          "./static/favicon-dark.png";
+        document.querySelector("link[rel*='icon']").href =
+          "./static/favicon-dark.png";
       }
     }
   }
