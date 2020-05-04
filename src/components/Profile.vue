@@ -85,11 +85,11 @@
     <transition name="fade">
       <div v-if="showError&&!loading" class="error">
         <div class="octocat">
-          <img src="../assets/errorCat.png" />
+          <img class="error-state"/>
         </div>
         <div class="message">
           <h2>Username not found.</h2>
-          <h3>Even our strongest octocat failed to find it.</h3>
+          <h3></h3>
         </div>
       </div>
     </transition>

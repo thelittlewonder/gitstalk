@@ -75,6 +75,11 @@ header {
   padding: 2em;
   align-items: center;
 
+  .error-state{
+    content:url($error-image);
+    mix-blend-mode: $blend-mode;
+  }
+
   .message {
     display: flex;
     flex-direction: column;
@@ -88,8 +93,12 @@ header {
     h3 {
       line-height: 1.5em;
       font-size: 1em;
-      color: $text2;
+      color: $text3;
+      &::after{
+        content: $error;
+      }
     }
+
   }
 }
 
