@@ -66,7 +66,7 @@ export default {
     let today = new Date()
     if (
       (window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches) ||  today.getHours() >= 22 || (today.getHours >= 0 && today.getHours() <=5)
+      window.matchMedia("(prefers-color-scheme: dark)").matches) ||  today.getHours() >= 22 || (today.getHours() >= 0 && today.getHours() <=5)
     ) {
       document.body.style.backgroundColor = "#1a1c21";
         document.getElementById("app").className = "dark-theme";
