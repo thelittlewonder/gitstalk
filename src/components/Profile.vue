@@ -1,14 +1,15 @@
 <template>
-  <div class="profile">
+  <div class="profile" :class="theme=='dark' ? 'dark-theme' : 'light-theme'">
     <header>
       <div class="logo">
         <router-link to="/">
-          <img src="../assets/gitstalk.svg" />
+          <div class="logo-image" />
         </router-link>
+        <div class="darkmode" @click="themeToggle()"/>
       </div>
       <div class="search">
         <form @submit.prevent="search()">
-          <label>www.github.com/</label>
+          <label>github.com/</label>
           <input v-model="username" />
           <button type="submit">Search</button>
         </form>
@@ -20,7 +21,7 @@
         <aside>
           <div class="about">
             <div class="dp">
-              <img :src="profile.avatar_url" />
+              <img :src="profile.avatar_url" @click="themeToggle()" />
             </div>
             <div class="name">
               <h1>
@@ -112,7 +113,8 @@ export default {
       showError: false,
       activityCount: 20,
       username: "",
-      languages: []
+      languages: [],
+      theme: "light"
     };
   },
   components: {
@@ -320,7 +322,7 @@ export default {
           }
           //if event is pushed
           // ref starts with "refs/heads/"
-          let branchRef = activity.payload.ref.slice(11)
+          let branchRef = activity.payload.ref.slice(11);
           stmnt =
             createIcon +
             "Pushed " +
@@ -455,322 +457,24 @@ export default {
           break;
       }
       return stmnt;
+    },
+    themeToggle: function() {
+      let favicon = document.getElementById('favicon');
+      if (this.theme == "dark") {
+        this.theme = "light";
+        document.body.style.backgroundColor = "#fdfdfd";
+        document.getElementById('app').className='light-theme'
+        favicon.setAttribute("href","./src/assets/favicon-light.png")
+      } else {
+        this.theme = "dark";
+        document.body.style.backgroundColor = "#1a1c21";
+        document.getElementById('app').className='dark-theme'
+        favicon.setAttribute("href","./src/assets/favicon-dark.png")
+      }
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
-$main: #5c75f6;
-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1em;
-  .search {
-    label {
-      color: #333;
-      font-size: 1em;
-      margin-right: 0.3em;
-    }
-    input {
-      background: #ffffff;
-      border: 1px solid #f1f1f1;
-      box-sizing: border-box;
-      font-size: 1em;
-      padding: 0.5em 0.75em;
-      &:focus {
-        outline: 1px solid $main;
-      }
-    }
-    button {
-      padding: 0.5em 1.25em;
-      cursor: pointer;
-      background-color: $main;
-      font-size: 1em;
-      border-radius: 2px;
-      color: #fff;
-      font-family: "Rubik";
-      border: none;
-      letter-spacing: 0.01em;
-    }
-  }
-}
-.error {
-  border: 1px solid #f7f7f7;
-  box-sizing: border-box;
-  border-radius: 2px;
-  display: flex;
-  background-color: #fff;
-  padding: 2em;
-  align-items: center;
-  .message {
-    display: flex;
-    flex-direction: column;
-    h2 {
-      font-size: 1.5em;
-      letter-spacing: 0.01em;
-      color: #000000;
-    }
-    h3 {
-      line-height: 1.5em;
-      font-size: 1em;
-      color: #666666;
-    }
-  }
-}
-.main {
-  aside {
-    .about {
-      background: #ffffff;
-      border: 1px solid #f7f7f7;
-      box-sizing: border-box;
-      border-radius: 2px 2px 0px 0px;
-      padding: 1em;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      .dp {
-        img {
-          height: 44px;
-          width: auto;
-          border-radius: 100%;
-        }
-        margin-right: 0.75em;
-      }
-      .name {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        h1 {
-          color: #333;
-          font-size: 1em;
-          margin-bottom: 0.375em;
-        }
-        a {
-          color: $main;
-          text-decoration: none;
-          font-size: 0.875em;
-        }
-      }
-    }
-    .stats {
-      background: #ffffff;
-      border-right: 1px solid #f7f7f7;
-      border-bottom: 1px solid #f7f7f7;
-      border-left: 1px solid #f7f7f7;
-      box-sizing: border-box;
-      border-radius: 2px 2px 0px 0px;
-      padding: 1em;
-      display: flex;
-      flex-direction: column;
-      .item {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin-bottom: 1em;
-        &:last-child {
-          margin-bottom: 0;
-        }
-        h3 {
-          font-size: 0.875em;
-          letter-spacing: 0.01em;
-          color: #888888;
-        }
-        p {
-          font-size: 1em;
-          letter-spacing: 0.01em;
-          color: #555555;
-        }
-      }
-    }
-    .lang {
-      background: #ffffff;
-      border-right: 1px solid #f7f7f7;
-      border-bottom: 1px solid #f7f7f7;
-      border-left: 1px solid #f7f7f7;
-      box-sizing: border-box;
-      border-radius: 2px 2px 0px 0px;
-      padding: 0.5em;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      span {
-        margin: 0.5em;
-        text-align: center;
-        font-size: 0.75em;
-        letter-spacing: 0.01em;
-        color: $main;
-        padding: 0.5em;
-        background-color: rgba($main, 0.05);
-        border-radius: 1px;
-        margin-right: 0.5em;
-      }
-    }
-    .dates {
-      background: #ffffff;
-      border-right: 1px solid #f7f7f7;
-      border-bottom: 1px solid #f7f7f7;
-      border-left: 1px solid #f7f7f7;
-      box-sizing: border-box;
-      border-radius: 2px 2px 0px 0px;
-      padding: 1em;
-      h4 {
-        font-size: 0.75em;
-        letter-spacing: 0.01em;
-        color: #888888;
-      }
-      p {
-        font-size: 0.875em;
-        letter-spacing: 0.01em;
-        color: #555555;
-        margin-top: 0.5em;
-      }
-      .joined {
-        margin-bottom: 1em;
-      }
-      .location {
-        margin-bottom: 0.875em;
-        p {
-          color: $main;
-        }
-      }
-      span {
-        font-size: 0.875em;
-        text-align: right;
-        letter-spacing: 0.01em;
-        color: #aaa;
-      }
-    }
-  }
-  section {
-    background: #ffffff;
-    border: 1px solid #f7f7f7;
-    box-sizing: border-box;
-    border-radius: 2px;
-    h2 {
-      font-size: 18px;
-      letter-spacing: 0.01em;
-      text-transform: uppercase;
-      color: #333333;
-      padding: 1.5em 1.5em 0 1.5em;
-    }
-    hr {
-      margin: 0.75em 0;
-      height: 0;
-      border: 1px solid #f7f7f7;
-    }
-    .activities {
-      padding: 0 1.5em 1.5em 1.5em;
-      .act {
-        display: flex;
-        padding: 0.75em 0;
-        border-bottom: 1px solid #f7f7f7;
-        &:last-child {
-          border-bottom: none;
-        }
-        .entry {
-          font-size: 1em;
-          letter-spacing: 0.01em;
-          line-height: 1.5em;
-          color: #666666;
-          margin-right: 0.5em;
-        }
-        .time {
-          font-size: 1em;
-          letter-spacing: 0.01em;
-          color: #cccccc;
-          margin-left: 0.5em;
-          line-height: 1.5em;
-          text-align: right;
-          flex-shrink: 0;
-        }
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .main {
-    display: flex;
-    flex-direction: column-reverse;
-  }
-  header {
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 1.5em;
-    .search {
-      label {
-        margin-right: 0;
-      }
-      form {
-        margin-top: 1em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: row;
-        label {
-          display: none;
-        }
-        button {
-          margin-left: 0.5em;
-        }
-      }
-    }
-  }
-  section {
-    .act {
-      flex-direction: column;
-      .time {
-        margin: 0.25em 0 0 0;
-        margin-left: 0 !important;
-      }
-    }
-  }
-
-  .error {
-    flex-direction: column;
-    justify-content: center;
-    h2 {
-      margin-bottom: 0.5em;
-    }
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .profile {
-    padding: 2em;
-    max-width: 980px;
-    margin: 0 auto;
-    .main {
-      display: flex;
-      flex-direction: row;
-      aside {
-        margin-right: 2%;
-        width: 28%;
-        min-width: 240px;
-      }
-      section {
-        width: 70%;
-        .act {
-          flex-direction: row;
-          justify-content: space-between;
-        }
-      }
-    }
-  }
-  .error {
-    flex-direction: row;
-    .octocat {
-      margin-right: 1.5em;
-    }
-    h2 {
-      margin-bottom: 0.825em;
-    }
-  }
-}
 </style>

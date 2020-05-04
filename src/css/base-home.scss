@@ -1,0 +1,120 @@
+::-webkit-input-placeholder {
+  color: $placeholder;
+  font-family: "Rubik";
+}
+
+.home {
+  max-width: 960px;
+  text-align: center;
+  margin: auto;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.search {
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .brandlogo {
+    margin-bottom: 0.75em;
+    height: 40px;
+    width: 250px;
+    background: url($logo) no-repeat;
+    display: block;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+  }
+
+  h3 {
+    margin-bottom: 4em;
+    color: $text1;
+    font-size: 0.75em;
+  }
+
+  .biatch {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    div {
+      color: $text1;
+    }
+
+    input {
+      margin-left: 0.25em;
+      color: $text1;
+    }
+
+    button {
+      padding: 0.6em 2em 0.5em 2em;
+      cursor: pointer;
+      background-color: $main;
+      font-size: 1em;
+      border-radius: 0 2px 2px 0;
+      color: #fff;
+      font-family: "Rubik";
+      border: none;
+      letter-spacing: 0.01em;
+    }
+  }
+
+  input {
+    min-width: 350px;
+    display: block;
+    background: $bg-main;
+    border: 1px solid $input-border;
+    box-sizing: border-box;
+    font-size: 1em;
+    padding: 0.5em 0.75em;
+    border-radius: 2px 0 0 2px;
+    transition-property: all;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $main;
+    }
+  }
+
+  .secondary {
+    margin-top: 1em;
+    background: transparent;
+    padding: 0.5em;
+    cursor: pointer;
+    font-size: 0.75em;
+    border-radius: 2px;
+    font-family: "Rubik";
+    border: none;
+    letter-spacing: 0.01em;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .biatch {
+    flex-direction: column !important;
+
+    div {
+      display: none;
+    }
+
+    input {
+      min-width: 320px !important;
+    }
+
+    button {
+      border-radius: 2px;
+      margin-top: 0.5em;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="light-theme">
     <transition name="fade">
-      <router-view/>
+      <router-view />
     </transition>
   </div>
 </template>
@@ -66,6 +66,26 @@ export default {
 </script>
 
 <style lang="scss">
+.light-theme {
+  @import "./css/themes/light";
+  .profile {
+    @import "./css/base-profile";
+  }
+  .home {
+     @import "./css/base-home";
+  }
+}
+
+.dark-theme {
+  @import "./css/themes/dark";
+  .profile {
+    @import "./css/base-profile";
+  }
+  .home {
+     @import "./css/base-home";
+  }
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition-property: opacity;
@@ -82,7 +102,6 @@ export default {
 }
 #app {
   font-family: "Rubik";
-  background-color: #fdfdfd;
 }
 a {
   color: #5c75f6;
