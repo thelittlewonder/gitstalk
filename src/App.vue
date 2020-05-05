@@ -72,9 +72,9 @@ export default {
         document.getElementById("app").className = "dark-theme";
         //favicon
         document.querySelector("link[rel='shortcut icon']").href =
-          "./static/favicon-dark.png";
+          "./static/favicon-light.png";
         document.querySelector("link[rel*='icon']").href =
-          "./static/favicon-dark.png";
+          "./static/favicon-light.png";
     }
   }
 };

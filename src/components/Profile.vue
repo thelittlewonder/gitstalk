@@ -473,18 +473,18 @@ export default {
         document.getElementById("app").className = "light-theme";
         //favicon
         document.querySelector("link[rel='shortcut icon']").href =
-          "./static/favicon-light.png";
+          "./static/favicon-dark.png";
         document.querySelector("link[rel*='icon']").href =
-          "./static/favicon-light.png";
+          "./static/favicon-dark.png";
       } else {
         vm.dark = true;
         document.body.style.backgroundColor = "#1a1c21";
         document.getElementById("app").className = "dark-theme";
         //favicon
         document.querySelector("link[rel='shortcut icon']").href =
-          "./static/favicon-dark.png";
+          "./static/favicon-light.png";
         document.querySelector("link[rel*='icon']").href =
-          "./static/favicon-dark.png";
+          "./static/favicon-light.png";
       }
     }
   }
