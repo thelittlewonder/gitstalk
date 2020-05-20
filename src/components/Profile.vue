@@ -487,9 +487,11 @@ export default {
       let vm = this;
       if (vm.dark) {
         vm.dark = false;
+        localStorage.setItem('current-theme', 'light');
         vm.setLight();
       } else {
         vm.dark = true;
+        localStorage.setItem('current-theme', 'dark');
         vm.setDark();
       }
     }

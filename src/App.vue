@@ -63,18 +63,33 @@ export default {
     ]
   },
   mounted: function() {
-    let today = new Date()
+    let today = new Date();
+    let storedTheme = localStorage.getItem("current-theme");
+
     if (
       (window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches) ||  today.getHours() >= 22 || (today.getHours() >= 0 && today.getHours() <=5)
+        window.matchMedia("(prefers-color-scheme: dark)").matches) ||
+      today.getHours() >= 22 ||
+      (today.getHours() >= 0 && today.getHours() <= 5) ||
+      storedTheme == "dark"
     ) {
       document.body.style.backgroundColor = "#1a1c21";
-        document.getElementById("app").className = "dark-theme";
-        //favicon
-        document.querySelector("link[rel='shortcut icon']").href =
-          "./static/favicon-light.png";
-        document.querySelector("link[rel*='icon']").href =
-          "./static/favicon-light.png";
+      document.getElementById("app").className = "dark-theme";
+      //favicon
+      document.querySelector("link[rel='shortcut icon']").href =
+        "./static/favicon-light.png";
+      document.querySelector("link[rel*='icon']").href =
+        "./static/favicon-light.png";
+    }
+
+    if ((storedTheme == "light")) {
+      document.body.style.backgroundColor = "#fdfdfd";
+      document.getElementById("app").className = "light-theme";
+      //favicon
+      document.querySelector("link[rel='shortcut icon']").href =
+        "./static/favicon-dark.png";
+      document.querySelector("link[rel*='icon']").href =
+        "./static/favicon-dark.png";
     }
   }
 };
