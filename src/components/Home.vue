@@ -27,14 +27,13 @@ export default {
         "thelittlewonder",
         "tj",
         "hackerkid",
-        "phobal",
+        "rsms",
         "rhysd",
         "himanshub16",
         "mixn",
-        "mubaris",
         "invokesus",
         "sindresorhus",
-        "CosmicCoder96"
+        "alyssaxuu"
       ]
     };
   },
