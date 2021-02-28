@@ -1,19 +1,16 @@
-# gitstalk2021
+![Gitstalk](https://i.imgur.com/4TLcgCS.png)
 
-## Project setup
-```
-yarn install
-```
+### Discover who's upto what on Github
+Check it out at https://gitstalk.netlify.com/
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+<a href="https://www.producthunt.com/posts/gitstalk?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-gitstalk" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=130890&theme=light" alt="Gitstalk - Discover what your favorite GitHub users are up to | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## Local Setup
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+```
