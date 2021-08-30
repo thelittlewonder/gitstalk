@@ -424,7 +424,7 @@ export default {
             '">' +
             "comment" +
             "</a>" +
-            " on their pull request in " +
+            " on a pull request in " +
             repoURL;
           break;
         case "IssuesEvent":
