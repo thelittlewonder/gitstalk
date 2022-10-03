@@ -79,6 +79,11 @@
               <div class="time">{{convertToRelative(activity.created_at)}}</div>
             </div>
           </div>
+          <hr />
+          <div class="pagination">
+            <button :disabled="!hasPrevious" type="button" @click="paginate(username, 'previous')">Previous Page</button>
+            <button :disabled="!hasNext" type="button" @click="paginate(username, 'next')">Next Page</button>
+          </div>
         </section>
       </div>
     </transition>
@@ -114,7 +119,11 @@ export default {
       activityCount: 20,
       username: "",
       languages: [],
-      dark: ""
+      dark: "",
+      // Pagination data
+      hasNext: false,
+      hasPrevious: false,
+      loadedPage: 0
     };
   },
   components: {
@@ -182,27 +191,85 @@ export default {
     }
   },
   methods: {
+    paginate: function(name, direction) {
+      //make request to github API
+      this.loading = true;
+      this.showError = false;
+
+      // Authorize with token if provided in url (?token=XYZ)
+      const headers = {};
+
+      const urlParams = new URLSearchParams(window.location.search);
+      if(urlParams.has("token")) {
+        headers["Authorization"] = "Bearer " + urlParams.get("token");
+      }
+
+      axios.get(
+      "https://api.github.com/users/" +
+        name +
+        "/events?per_page=" +
+        this.activityCount + "&page=" + (this.loadedPage + (direction === 'next' ? 1 : -1)),
+        { headers }
+      )
+      .then((activity) => {
+          //hide loader
+          this.loading = false;
+
+          direction === 'next' ? this.loadedPage++ : this.loadedPage--;
+          
+          //pagination
+          const link = this.parseLinkHeader(activity.headers.link);
+
+          this.hasNext = link.next !== undefined;
+          this.hasPrevious = this.loadedPage > 1;
+
+          this.activities = activity.data;
+      })
+      .catch(err => {
+        this.loading = false;
+        console.log(err);
+        this.showError = true;
+      });
+    },
     makeRequest: function(name) {
       //make request to github API
       this.loading = true;
       this.showError = false;
+
+      // Authorize with token if provided in url (?token=XYZ)
+      const headers = {};
+
+      const urlParams = new URLSearchParams(window.location.search);
+      if(urlParams.has("token")) {
+        headers["Authorization"] = "Bearer " + urlParams.get("token");
+      }
+
       axios
         .all([
-          axios.get("https://api.github.com/users/" + name),
+          axios.get("https://api.github.com/users/" + name, { headers }),
           axios.get(
             "https://api.github.com/users/" +
               name +
               "/events?per_page=" +
-              this.activityCount
+              this.activityCount + "&page=1",
+              { headers }
           ),
           axios.get(
-            "https://api.github.com/users/" + name + "/repos?per_page=100"
+            "https://api.github.com/users/" + name + "/repos?per_page=100", { headers }
           )
         ])
         .then(
           axios.spread((profile, activity, repo) => {
             //hide loader
             this.loading = false;
+
+            this.loadedPage++;
+            
+            //pagination
+            const link = this.parseLinkHeader(activity.headers.link);
+
+            this.hasNext = link.next !== undefined;
+            this.hasPrevious = this.loadedPage > 1;
 
             //set data
             this.profile = profile.data;
@@ -220,6 +287,28 @@ export default {
           console.log(err);
           this.showError = true;
         });
+    },
+    //parse GitHub API link header (pagination info)
+    parseLinkHeader: function(header) {
+      if (header.length == 0) {
+        throw new Error("input must not be of zero length");
+      }
+
+      //split parts by comma
+      var parts = header.split(',');
+      var links = {};
+      //parse each part into a named link
+      for(const p of parts) {
+        var section = p.split(';');
+        if (section.length != 2) {
+          throw new Error("section could not be split on ';'");
+        }
+        var url = section[0].replace(/<(.*)>/, '$1').trim();
+        var name = section[1].replace(/rel="(.*)"/, '$1').trim();
+        links[name] = url;
+      }
+
+      return links;
     },
     search: function() {
       let user = this.username;
