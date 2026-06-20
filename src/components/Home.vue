@@ -25,15 +25,13 @@ export default {
       showError: false,
       randomUsers: [
         "thelittlewonder",
-        "tj",
-        "hackerkid",
         "rsms",
         "rhysd",
-        "himanshub16",
-        "mixn",
-        "invokesus",
         "sindresorhus",
-        "alyssaxuu"
+        "alyssaxuu",
+        "torvalds",
+        "karpathy",
+        "gaearon",
       ]
     };
   },
