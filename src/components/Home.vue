@@ -5,7 +5,7 @@
       <h3>Discover who's upto what...</h3>
       <div class="biatch">
         <div>github.com/</div>
-        <input name="username" v-model="username" @keypress="toggle()" placeholder="Enter Github Username">
+        <input name="username" v-model="username" @keypress="toggle()" placeholder="Enter GitHub Username">
         <button type="submit">Search</button>
       </div>
       <button class="secondary" @click="getRandom()"><a>Randomise User?</a></button>

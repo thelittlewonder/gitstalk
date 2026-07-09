@@ -21,9 +21,9 @@ export default {
       {
         name: "description",
         content:
-          "Discover who's upto what on Github. Web-App to analyse Github users activity"
+          "Discover who's upto what on GitHub. Web-App to analyse GitHub users activity"
       },
-      { name: "subject", content: "Discover who's upto what on Github" },
+      { name: "subject", content: "Discover who's upto what on GitHub" },
       { name: "author", content: "@thelittlewonder" },
       { name: "url", content: "http://gitstalk.herokuapp.com" },
       { name: "og:title", content: "Gitstalk" },
@@ -33,12 +33,12 @@ export default {
       {
         name: "og:description",
         content:
-          "Discover who's upto what on Github. Web-App to analyse Github users activity"
+          "Discover who's upto what on GitHub. Web-App to analyse GitHub users activity"
       },
       {
         name: "twitter:card",
         content:
-          "Discover who's upto what on Github. Web-App to analyse Github users activity"
+          "Discover who's upto what on GitHub. Web-App to analyse GitHub users activity"
       },
       {
         name: "twitter:site",
@@ -47,14 +47,14 @@ export default {
       { name: "twitter:title", content: "Gitstalk" },
       {
         name: "twitter:description",
-        content: "Discover who's upto what on Github"
+        content: "Discover who's upto what on GitHub"
       },
       { name: "twitter:creator", content: "@thelittlewonder" },
       { itemprop: "name", content: "Gitstalk" },
       {
         itemprop: "description",
         content:
-          "Discover who's upto what on Github. Web-App to analyse Github users activity"
+          "Discover who's upto what on GitHub. Web-App to analyse GitHub users activity"
       },
       {
         name: "theme-color",
